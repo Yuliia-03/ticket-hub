@@ -36,7 +36,7 @@ class FlightsResult(BaseModel):
     date_time_from: datetime.datetime
     date_time_in: datetime.datetime
 
-    price: int
+    price: str
 
     airport_departure_IATA: str
     airport_departure_name: str

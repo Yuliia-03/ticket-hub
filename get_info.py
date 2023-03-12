@@ -89,9 +89,9 @@ class Scraping():
                     info = t.find_element(By.TAG_NAME, 'span').get_attribute('title')
                     time = info.split('stopover')[0]
                     change = re.search(r'<b>(.*?)</b>', info).group(1)
-                    route.append({airport: change, 'time' : time})
+                    route.append({'airport_IATA': airport, 'airport_name': change, 'waiting_time' : time})
                 
-                self.data[i]['route']['transfer'] = route
+                self.data[i]['route']['transfers'] = route
 
     def company(self):
         for i in range(len(self.pageSource)):
