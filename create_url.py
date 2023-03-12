@@ -16,14 +16,14 @@ class GetUrl():
         self.youths12_17 = serchParam.youths12_17
         self.children2_11 = serchParam.children2_11
         
-        self.toddlers_on_lapunder = serchParam.toddlers_on_lapunder
-        self.toddlers_in_own_seatunder = serchParam.toddlers_in_own_seatunder
+        self.toddlers_on_lap = serchParam.toddlers_on_lap
+        self.toddlers_in_own_seat = serchParam.toddlers_in_own_seat
 
         self.cabin_class = serchParam.cabin_class
 
 
     def children(self) -> str:
-        return self.toddlers_in_own_seatunder * str('-1S') + self.toddlers_on_lapunder * str('-1L') + self.children2_11 * str('-11') + self.youths12_17 * str('-15')
+        return self.toddlers_in_own_seat * str('-1S') + self.toddlers_on_lap * str('-1L') + self.children2_11 * str('-11') + self.youths12_17 * str('-15')
 
     
     def url(self) -> str:

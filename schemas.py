@@ -14,8 +14,8 @@ class SearchParams(BaseModel):
 
     youths12_17: int = 0
     children2_11: int = 0
-    toddlers_on_lapunder: int = 0
-    toddlers_in_own_seatunder: int = 0
+    toddlers_on_lap: int = 0
+    toddlers_in_own_seat: int = 0
 
     cabin_class: str = "economy"
 

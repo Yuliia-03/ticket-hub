@@ -9,7 +9,7 @@ app = FastAPI()
 @app.post("/flight/search", response_model=List[schemas.FlightsResult])
 def form_url(searchParams: schemas.SearchParams):
     get_url = GetUrl(searchParams)
-    #get_url.url()
+
     parsing = Scraping(get_url.url(), searchParams.date)
     parsing.close_cookies()
 
