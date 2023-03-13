@@ -1,7 +1,16 @@
-from fastapi import FastAPI
 from pydantic import BaseModel
 
 import datetime
+
+
+class iata_code(BaseModel):
+
+    iata_code: str
+    city_airport: str
+    country: str
+
+    class Config:
+        orm_mode = True
 
 class SearchParams(BaseModel):
     

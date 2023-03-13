@@ -1,13 +1,18 @@
 import schemas
+import models
+
+from sqlalchemy.orm import Session
 
 class GetUrl():
 
-    def __init__(self, serchParam: schemas.SearchParams) -> None:
-        self.departure = serchParam.departure
-        self.arrival = serchParam.arrival
+    def __init__(self, serchParam: schemas.SearchParams, db: Session) -> None:
+        #self.departure = serchParam.departure
+        self.departure = models.get_iata_by_city(db, serchParam.departure)
+        #self.arrival = serchParam.arrival
+        self.arrival = models.get_iata_by_city(db, serchParam.arrival)
 
         #self.day = serchParam.date.day
-        #self.month = '%B'.format(serchParam.date.month)
+        #self.month = serchParam.date.month
         #self.year = serchParam.date.year
         self.date = '{:%Y-%m-%d}'.format(serchParam.date)
 
@@ -28,9 +33,12 @@ class GetUrl():
     
     def url(self) -> str:
 
+
+
         self.url = f'https://www.kayak.co.uk/flights/{self.departure}-{self.arrival}/{self.date}/{self.cabin_class}/{self.adults}adults/{self.students}students/{self.children()}?sort=price_a'
         return self.url
 
 
     def get_IATA(self):
         pass
+        
