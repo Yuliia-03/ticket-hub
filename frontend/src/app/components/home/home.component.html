@@ -1,0 +1,10 @@
+<p>home works!</p>
+<form [formGroup]="searchForm" (ngSubmit)="search()">
+    <label for="first-name">Departure: </label>
+    <input id="first-name" type="text" formControlName="departure">
+  
+    <label for="last-name">Arrival: </label>
+    <input id="last-name" type="text" formControlName="arrival">
+    <button type="submit" [disabled]="!searchForm.valid">Submit</button>
+</form>
+<!-- <mat-icon>add</mat-icon> -->

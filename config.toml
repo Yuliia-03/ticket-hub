@@ -1,0 +1,9 @@
+SECRET_KEY = "kjsaf8asdf98u809asdf8"
+SQLALCHEMY_ECHO = true
+ENVIRONMENT = "development"
+
+DB_HOST = "localhost"
+DB_USER = "postgres"
+DB_PASS = "postgres"
+DB_PORT = 5432
+DB_NAME = "postgres"

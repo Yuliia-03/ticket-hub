@@ -3,6 +3,7 @@ from time import sleep
 import re
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import requests
 from datetime import date, datetime, timedelta
@@ -12,11 +13,17 @@ class Scraping():
 
 
     def __init__(self, url: str, date: date) -> None:
-
+        # options = webdriver.ChromeOptions();
+        # chrome_options = Options()
+        # chrome_options.add_argument('--headless')
+        # chrome_options.add_argument('--no-sandbox')
+        # chrome_options.add_argument('--disable-dev-shm-usage')
+        # d = webdriver.Chrome('/home/<user>/chromedriver',chrome_options=chrome_options)
+        # d.get('https://www.google.nl/')
         self.data = []
         self.url = url
         self.date = date
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Firefox()
         sleep(0.5)
         self.driver.get(url)
 
