@@ -1,10 +1,64 @@
-<p>home works!</p>
-<form [formGroup]="searchForm" (ngSubmit)="search()">
-    <label for="first-name">Departure: </label>
-    <input id="first-name" type="text" formControlName="departure">
-  
-    <label for="last-name">Arrival: </label>
-    <input id="last-name" type="text" formControlName="arrival">
+<p>Search for flights!</p>
+<form class="flight-search-form" [formGroup]="searchForm" (ngSubmit)="search()">
+    <div class="form-field">
+        <label for="departure">Departure: </label>
+        <input id="departure" type="text" formControlName="departure">
+    </div>
+
+    <div>
+        <label for="arrival">Arrival: </label>
+        <input id="arrival" type="text" formControlName="arrival">
+    </div>
+    <div>
+        <label for="date">Date: </label>
+        <input id="last-name" type="date" formControlName="date">
+    </div>
+    <div>
+        <label for="adults">Adults: </label>
+        <input id="adults" type="number" formControlName="adults">
+    </div>
+    <div>
+        <label for="students">Students: </label>
+        <input id="students" type="number" formControlName="students">
+    </div>
+    <div>
+        <label for="youths12_17">Youths from 12 to 17: </label>
+        <input id="youths12_17" type="number" formControlName="youths12_17">
+    </div>
+    <div>
+        <label for="children2_11">Children from 2 to 11: </label>
+        <input id="children2_11" type="number" formControlName="children2_11">
+    </div>
+    <div>
+        <label for="toddlers_on_lap">Toddlers on lap: </label>
+        <input id="toddlers_on_lap" type="number" formControlName="toddlers_on_lap">
+    </div>
+    <div>
+        <label for="toddlers_in_own_seat">Toddlers in own seat: </label>
+        <input id="toddlers_in_own_seat" type="number" formControlName="toddlers_in_own_seat">
+    </div>
+    <div>
+        <label for="cabin_class">Cabin class: </label>
+        <select formControlName="cabin_class" id="cabin-class">
+            <option value="economy">Economy</option>
+          </select>
+    </div>
+
     <button type="submit" [disabled]="!searchForm.valid">Submit</button>
 </form>
-<!-- <mat-icon>add</mat-icon> -->
+<div>
+    <div *ngFor="let ticket of searchResults" class="ticket-block">
+        <div class="ticket-header">
+            <div>{{ticket.airport_departure_name}} - {{ticket.airport_arrival_name}}</div>
+            <div>Duration: {{ticket.duration}}</div>
+            <div>Price: {{ticket.price}}</div>
+            <a href={{ticket.url}}>Order</a>
+        </div>
+        <div *ngIf="ticket.route" class="ticket-route">
+            <div *ngFor="let route of ticket.route.transfers">
+                <span>{{route.airport_name}} Waiting time: {{route.waiting_time}}</span>
+            </div>
+        </div>
+
+    </div>
+</div>

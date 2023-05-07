@@ -1,0 +1,26 @@
+.flight-search-form {
+    display: flex;
+    flex-direction: column;
+    .form-field {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.ticket-block {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+
+.ticket-header {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    > * {
+        padding: 5px
+    }
+}
