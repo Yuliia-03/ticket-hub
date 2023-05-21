@@ -32,6 +32,8 @@ export class HomeComponent implements OnInit {
 
     searchResults: any = null;
     cities: any = null;
+    departureCities: any = null;
+    arrivalCities: any = null;
 
     dateToday() {
         const now = new Date();
@@ -58,6 +60,7 @@ export class HomeComponent implements OnInit {
     constructor(private searchService: SearchService) {}
 
     ngOnInit(): void {
+        this.get_cities();        
     }
 
     search(): void {
@@ -95,10 +98,24 @@ export class HomeComponent implements OnInit {
             });
     }
 
+    departureChanged() {
+        let departureAirport = this.searchForm.get('departure')?.value;
+        this.departureCities = this.cities;
+        this.arrivalCities = this.cities;
+        this.arrivalCities = this.cities.filter((el: any) => el.city_airport !== departureAirport)
+    }
+
+    arrivalChanged() {
+        let arrivalAirport = this.searchForm.get('arrival')?.value;
+        this.departureCities = this.cities;
+        this.arrivalCities = this.cities;
+        this.departureCities = this.cities.filter((el: any) => el.city_airport !== arrivalAirport)
+    }
     get_cities(): void {
         this.searchService.get_city().subscribe((resp: any) => {
-            console.log('resp', resp);
             this.cities = resp;
+            this.departureCities = this.cities;
+            this.arrivalCities = this.cities;
         });
     }
 }

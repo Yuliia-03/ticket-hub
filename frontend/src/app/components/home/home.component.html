@@ -44,8 +44,8 @@
                                     <div class="form-group">
                                         <span class="form-label">Flying from</span>
 
-                                        <select class="form-control"  id="departure" name="Service" (click)="get_cities()" formControlName="departure">
-                                            <option placeholder="City or airport" [value]="serv.city_airport" *ngFor="let serv of cities">
+                                        <select class="form-control"  id="departure" name="Service" formControlName="departure" (change)="departureChanged()">
+                                            <option placeholder="City or airport" [value]="serv.city_airport" *ngFor="let serv of departureCities">
                                                 {{serv.city_airport}}
                                             </option>
                                         </select>
@@ -87,8 +87,8 @@
                                     <div class="form-group">
                                         <span class="form-label">Flyning to</span>
                                 
-                                        <select class="form-control" id="arrival" name="Service" (click)="get_cities()" formControlName="arrival">
-                                            <option [value]="serv.city_airport" *ngFor="let serv of cities">
+                                        <select class="form-control" id="arrival" name="Service" formControlName="arrival" (change)="arrivalChanged()">
+                                            <option [value]="serv.city_airport" *ngFor="let serv of arrivalCities">
                                                 {{serv.city_airport}}
                                             </option>
                                         </select>
