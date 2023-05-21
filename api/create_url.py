@@ -28,8 +28,10 @@ class GetUrl():
 
 
     def children(self) -> str:
-        return self.toddlers_in_own_seat * str('-1S') + self.toddlers_on_lap * str('-1L') + self.children2_11 * str('-11') + self.youths12_17 * str('-15')
-
+        if self.youths12_17 + self.children2_11 + self.toddlers_on_lap + self.toddlers_in_own_seat != 0:
+            return 'children' + self.toddlers_in_own_seat * str('-1S') + self.toddlers_on_lap * str('-1L') + self.children2_11 * str('-11') + self.youths12_17 * str('-15')
+        else:
+            return ''
     
     def url(self) -> str:
 

@@ -36,6 +36,19 @@ export class SearchService {
                 catchError(this.errorHandler)
             )
     }
+    
+    get_city(): Observable<any> {
+        let flightSearchUrl = this.apiUrl + "flight/search";
+      return this.http.get<any>(flightSearchUrl).
+            pipe(
+                tap((resp: HttpResponse<any>) => {
+                    return resp;
+                }),
+                catchError(this.errorHandler)
+            )
+    }
+
+  
 
     private errorHandler(error: HttpErrorResponse) {
         console.log(error);

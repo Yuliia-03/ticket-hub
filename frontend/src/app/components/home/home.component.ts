@@ -29,7 +29,31 @@ export class HomeComponent implements OnInit {
         cabin_class: new FormControl(''),
     });
 
+
     searchResults: any = null;
+    cities: any = null;
+
+    dateToday() {
+        const now = new Date();
+
+        return [
+            now.getFullYear(),
+            (now.getMonth() + 1).toString().padStart(2, '0'),
+            (now.getDate()).toString().padStart(2, '0'),
+        ].join('-');
+    };  
+    
+    count = 0
+    increment() {
+        this.count = this.count + 1
+    }
+    decrement() {
+        if (this.count == 0) {
+            this.count = 0
+        } else {
+            this.count = this.count - 1
+        }
+    }
 
     constructor(private searchService: SearchService) {}
 
@@ -69,5 +93,12 @@ export class HomeComponent implements OnInit {
                 console.log('resp', resp);
                 this.searchResults = resp;
             });
+    }
+
+    get_cities(): void {
+        this.searchService.get_city().subscribe((resp: any) => {
+            console.log('resp', resp);
+            this.cities = resp;
+        });
     }
 }

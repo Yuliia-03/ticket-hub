@@ -1,0 +1,16 @@
+curl -X 'POST' \
+  'http://localhost:8000/flight/search' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "departure": "Krakow (Cracow) - John Paul II International Airport",
+  "arrival": "Berlin",
+  "date": "2023-05-19",
+  "adults": 1,
+  "students": 0,
+  "youths12_17": 0,
+  "children2_11": 0,
+  "toddlers_on_lap": 0,
+  "toddlers_in_own_seat": 0,
+  "cabin_class": "economy"
+}'

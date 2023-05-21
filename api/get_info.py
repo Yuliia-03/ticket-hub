@@ -23,7 +23,7 @@ class Scraping():
         self.data = []
         self.url = url
         self.date = date
-        self.driver = webdriver.Firefox()
+        self.driver = webdriver.Chrome()
         sleep(0.5)
         self.driver.get(url)
 
@@ -58,7 +58,13 @@ class Scraping():
     def get_price(self):
 
         for i in range(len(self.pageSource)):
-            self.data[i]['price'] = self.pageSource[i].find_element(By.CLASS_NAME, 'f8F1-price-text').text
+            if (len(self.pageSource[i].find_elements(By.XPATH, '//div[@class="f8F1-small-emph"]'))>0):
+                price_for_person = self.pageSource[i].find_element(By.CLASS_NAME, 'f8F1-price-text').text
+                total_price = self.pageSource[i].find_element(By.CSS_SELECTOR, 'div > div.f8F1-above > div.f8F1-small-emph').text
+                print(price_for_person, total_price)
+                self.data[i]['price'] = total_price + ' (' + price_for_person + '/person)'
+            else:
+                self.data[i]['price'] = self.pageSource[i].find_element(By.CLASS_NAME, 'f8F1-price-text').text
 
     def get_from_to(self):
         departure = [self.pageSource[i].find_element(By.CLASS_NAME, 'VY2U').text.split('\n')[1] for i in range(len(self.pageSource))]
@@ -87,7 +93,6 @@ class Scraping():
                 self.data[i]['route'] = {'stops' : stops[0][0], }
                 
                 time = self.pageSource[i].find_elements(By.CSS_SELECTOR, 'div.c_cgF.c_cgF-mod-variant-full-airport > span')
-
                 route = []
 
                 for t in time:

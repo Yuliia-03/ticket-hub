@@ -12,6 +12,13 @@ class iata_code(BaseModel):
     class Config:
         orm_mode = True
 
+class Airports(BaseModel):
+
+    city_airport: str
+
+    class Config:
+        orm_mode = True
+
 class SearchParams(BaseModel):
     
     departure: str

@@ -4,6 +4,6 @@ ENVIRONMENT = "development"
 
 DB_HOST = "localhost"
 DB_USER = "postgres"
-DB_PASS = "postgres"
+DB_PASS = "2905"
 DB_PORT = 5432
-DB_NAME = "postgres"
+DB_NAME = "diploma"

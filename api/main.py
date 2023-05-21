@@ -3,14 +3,13 @@ from typing import List
 from api import schemas
 from api.create_url import GetUrl
 from api.get_info import Scraping
+from api import models
 
 from sqlalchemy.orm import Session
 
 
 
 from api.database import SessionLocal
-
-#models.Base.metadata.create_all(bind=engine)
 
 main_router = APIRouter()
 app = FastAPI()
@@ -31,3 +30,10 @@ def form_url(searchParams: schemas.SearchParams, db: Session = Depends(get_db)):
     parsing.close_cookies()
 
     return parsing.get_data()
+
+@main_router.get("/flight/search", response_model=List[schemas.Airports])
+def all_airports(db: Session = Depends(get_db)) -> list:
+    print(type(models.get_all_airports(db)))
+
+    return models.get_all_airports(db)
+  
