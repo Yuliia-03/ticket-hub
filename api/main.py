@@ -33,7 +33,12 @@ def form_url(searchParams: schemas.SearchParams, db: Session = Depends(get_db)):
 
 @main_router.get("/flight/search", response_model=List[schemas.Airports])
 def all_airports(db: Session = Depends(get_db)) -> list:
-    print(type(models.get_all_airports(db)))
 
     return models.get_all_airports(db)
+
+#@main_router.get("/flight/search", response_model=List[schemas.Airports])
+#def all_airports(db: Session = Depends(get_db)) -> list:
+#    print(models.get_all_airports_data(db))
+#
+#    return models.get_all_airports_data(db)
   

@@ -49,7 +49,6 @@ export class SearchService {
     }
 
   
-
     private errorHandler(error: HttpErrorResponse) {
         console.log(error);
     

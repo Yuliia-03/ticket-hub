@@ -13,13 +13,6 @@ class Scraping():
 
 
     def __init__(self, url: str, date: date) -> None:
-        # options = webdriver.ChromeOptions();
-        # chrome_options = Options()
-        # chrome_options.add_argument('--headless')
-        # chrome_options.add_argument('--no-sandbox')
-        # chrome_options.add_argument('--disable-dev-shm-usage')
-        # d = webdriver.Chrome('/home/<user>/chromedriver',chrome_options=chrome_options)
-        # d.get('https://www.google.nl/')
         self.data = []
         self.url = url
         self.date = date
@@ -33,7 +26,7 @@ class Scraping():
         button = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, xp_popup_close)))
         button.click()
         print('Cookies closed')
-        sleep(0.2)
+        sleep(0.3)
 
         
     def get_date_time(self):
@@ -62,9 +55,10 @@ class Scraping():
                 price_for_person = self.pageSource[i].find_element(By.CLASS_NAME, 'f8F1-price-text').text
                 total_price = self.pageSource[i].find_element(By.CSS_SELECTOR, 'div > div.f8F1-above > div.f8F1-small-emph').text
                 print(price_for_person, total_price)
-                self.data[i]['price'] = total_price + ' (' + price_for_person + '/person)'
+                self.data[i]['total_price'] = total_price
+                self.data[i]['price_for_person'] = price_for_person
             else:
-                self.data[i]['price'] = self.pageSource[i].find_element(By.CLASS_NAME, 'f8F1-price-text').text
+                self.data[i]['total_price'] = self.pageSource[i].find_element(By.CLASS_NAME, 'f8F1-price-text').text
 
     def get_from_to(self):
         departure = [self.pageSource[i].find_element(By.CLASS_NAME, 'VY2U').text.split('\n')[1] for i in range(len(self.pageSource))]
@@ -85,12 +79,16 @@ class Scraping():
         for i in range(len(self.pageSource)):
             
             if routes[i] == 'direct' or routes[i].split(' ')[0] == 0:
-                self.data[i]['route'] = 'direct'
+                self.data[i]['route'] = {'stops' : "direct", }
             
             else:
 
                 stops = routes[i].split('\n')
-                self.data[i]['route'] = {'stops' : stops[0][0], }
+                if int(stops[0][0]) > 1:
+                    stops_str = str(stops[0][0]) + " stops"
+                else:
+                    stops_str = str(stops[0][0]) + " stop"
+                self.data[i]['route'] = {'stops' : stops_str, }
                 
                 time = self.pageSource[i].find_elements(By.CSS_SELECTOR, 'div.c_cgF.c_cgF-mod-variant-full-airport > span')
                 route = []

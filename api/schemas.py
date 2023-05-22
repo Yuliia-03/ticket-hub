@@ -19,6 +19,7 @@ class Airports(BaseModel):
     class Config:
         orm_mode = True
 
+
 class SearchParams(BaseModel):
     
     departure: str
@@ -43,7 +44,7 @@ class Changes(BaseModel):
 
 class Route(BaseModel):
 
-    stops: int
+    stops: str
     transfers: list[Changes] = []
 
 
@@ -52,14 +53,15 @@ class FlightsResult(BaseModel):
     date_time_from: datetime.datetime
     date_time_in: datetime.datetime
 
-    price: str
+    total_price: str
+    price_for_person: str=''
 
     airport_departure_IATA: str
     airport_departure_name: str
     airport_arrival_IATA: str
     airport_arrival_name: str
 
-    route: str | Route
+    route: Route
 
     duration: str
     cabin_class: str

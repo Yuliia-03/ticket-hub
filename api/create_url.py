@@ -37,7 +37,7 @@ class GetUrl():
 
 
 
-        self.url = f'https://www.kayak.co.uk/flights/{self.departure}-{self.arrival}/{self.date}/{self.cabin_class}/{self.adults}adults/{self.students}students/{self.children()}?sort=price_a'
+        self.url = f'https://www.kayak.co.uk/flights/{self.departure}-{self.arrival}/{self.date}/{self.cabin_class}/{self.adults}adults/{self.students}students/{self.children()}?sort=bestflight_a'
         return self.url
 
 

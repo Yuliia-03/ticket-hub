@@ -1,39 +1,4 @@
-
-<!--
--->
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-    <title>Booking Form HTML Template</title>
-
-    <!-- Google font -->
-
-    <!-- Bootstrap -->
-    <!-- 
-        <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
-    -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-
-    <!-- Custom stlylesheet -->
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
-
-</head>
-
-<body>
-    <div id="booking" class="section">
+<div id="booking" class="section">
         <div class="section-center">
             <div class="container">
                 <div class="row">
@@ -192,34 +157,66 @@
                                 </div>
                             </div>
                         </form>
+
                         
-                    </div>
-                </div>
                 
-                <div class="container">
-                <div id="search-form">
-                    <div class="row">
-                    <div *ngFor="let ticket of searchResults" class="ticket-block">
-                        <div class="ticket-header">
-                            <div>{{ticket.airport_departure_name}} - {{ticket.airport_arrival_name}}</div>
-                            <div>Duration: {{ticket.duration}}</div>
-                            <div>Price: {{ticket.price}}</div>
-                            <div>Company: {{ticket.company}}</div>
-                            <a href={{ticket.url}}>Order</a>
-                        </div>
-                        <div *ngIf="ticket.route" class="ticket-route">
-                            <div *ngFor="let route of ticket.route.transfers">
-                            <span>{{route.airport_name}} Waiting time: {{route.waiting_time}}</span>
-                        </div>
                     </div>
-                </div>
-                </div>
-                </div>
                        
                 </div>
             </div>            
         </div>
-    </div>
-</body>
+        <div class="container">
+            <div id="flight-results">
+                <div *ngFor="let ticket of searchResults" class="ticket-block">
+                    <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div><b>{{ticket.date_time_from | date:"HH:mm"}} - {{ticket.date_time_in | date:"HH:mm"}}</b></div>
+                                </div>
+                                <div class="row">
+                                    <div>{{ticket.airport_departure_IATA}} {{ticket.airport_departure_name}} - {{ticket.airport_arrival_IATA}}
+                                        {{ticket.airport_arrival_name}}</div>
+                                </div>
+                                <div class="row"><br></div>
+                                <div class="row">
+                                    <div id="additional_info">Company: {{ticket.company}}</div>
+                                </div>
 
-</html>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div><b>Duration: {{ticket.duration}}</b></div>
+                                </div>
+                                <div class="row"><br></div>
+                                <div class="row">
+                                    <div>{{ticket.route.stops}}</div>
+                                </div>
+                                <div class="row">
+                                    <div *ngIf="ticket.route" class="ticket-route">
+                                        <div *ngFor="let route of ticket.route.transfers">
+                                            <div title="{{route.waiting_time}} stopover {{route.airport_name}}">{{route.airport_IATA}} </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                            <div class="outer">
+                                <div class="inner"></div>
+                            </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="row">
+                                    <div><b>{{ticket.total_price}}</b></div><br>
+                                    <div id="additional_info">{{ticket.price_for_person}}/person</div><br>
+                                </div>
+                                <div class="row">
+                                    <a id="order-button" href={{ticket.url}}>Order</a>
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+    </div>

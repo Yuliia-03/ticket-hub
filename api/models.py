@@ -1,7 +1,6 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import declarative_base
-# from api.database import Base
 
 from sqlalchemy.orm import Session
 
@@ -25,3 +24,9 @@ def get_all_airports(db: Session) -> list:
     if airports == None:
         return None
     return airports
+
+#def get_all_airports_data(db: Session) -> list:
+#    airports = db.query(Airports.city_airport, Airports.country).all()
+#    if airports == None:
+#        return None
+#    return airports

@@ -45,17 +45,6 @@ export class HomeComponent implements OnInit {
         ].join('-');
     };  
     
-    count = 0
-    increment() {
-        this.count = this.count + 1
-    }
-    decrement() {
-        if (this.count == 0) {
-            this.count = 0
-        } else {
-            this.count = this.count - 1
-        }
-    }
 
     constructor(private searchService: SearchService) {}
 
@@ -67,7 +56,8 @@ export class HomeComponent implements OnInit {
         console.log('searchForm', this.searchForm.value);
         
         this.searchService.search(
-          // {
+          
+            /* {
           //       departure:
           //           'Krakow (Cracow) - John Paul II International Airport',
           //       arrival: 'Leon',
@@ -79,7 +69,7 @@ export class HomeComponent implements OnInit {
           //       toddlers_on_lap: 0,
           //       toddlers_in_own_seat: 0,
           //       cabin_class: 'economy',
-          //   }
+             }*/
           {
                 departure: this.searchForm.value.departure!,
                 arrival: this.searchForm.value.arrival!,
