@@ -16,7 +16,7 @@ class Scraping():
         self.data = []
         self.url = url
         self.date = date
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Firefox()
         sleep(0.5)
         self.driver.get(url)
 
