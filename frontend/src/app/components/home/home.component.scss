@@ -16,7 +16,6 @@
 
 #booking {
     font-family: 'PT Sans', sans-serif;
-    background-image: url('background.jpg');
     background-size: cover;
     background-attachment: fixed;
 }
@@ -181,8 +180,6 @@
     background-position: center;
     width: 87%;
     border-radius: 6px;
-    border: 1px;
-    border-color: #191a1e;
     background-color: rgba(255, 255, 255, 0.744);
     
 }
@@ -193,6 +190,8 @@
     border-radius: 6px;
     border: 1px;
     border-color: #191a1e;
+    border: #191a1e;
+    border-style: double;
 }
 
 #additional_info{
