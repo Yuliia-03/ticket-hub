@@ -9,18 +9,10 @@
                                 <div class="form-group">
                                     <span class="form-label">Flying from</span>
 
-                                    <select
-                                        class="form-control"
-                                        id="departure"
-                                        name="Service"
-                                        formControlName="departure"
-                                        (change)="departureChanged()"
-                                    >
-                                        <option
-                                            placeholder="City or airport"
-                                            [value]="serv.city_airport"
-                                            *ngFor="let serv of departureCities"
-                                        >
+                                    <select class="form-control" id="departure" name="Service"
+                                        formControlName="departure" (change)="departureChanged()">
+                                        <option placeholder="City or airport" [value]="serv.city_airport"
+                                            *ngFor="let serv of departureCities">
                                             {{ serv.city_airport }}
                                         </option>
                                     </select>
@@ -29,15 +21,8 @@
 
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <span class="form-label" for="adults"
-                                        >Adults (18+)</span
-                                    >
-                                    <select
-                                        name="adults"
-                                        id="adults"
-                                        class="form-control"
-                                        formControlName="adults"
-                                    >
+                                    <span class="form-label" for="adults">Adults (18+)</span>
+                                    <select name="adults" id="adults" class="form-control" formControlName="adults">
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -50,15 +35,8 @@
 
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <span class="form-label" for="sudents"
-                                        >Students</span
-                                    >
-                                    <select
-                                        name="sudents"
-                                        id="sudents"
-                                        class="form-control"
-                                        formControlName="students"
-                                    >
+                                    <span class="form-label" for="sudents">Students</span>
+                                    <select name="sudents" id="sudents" class="form-control" formControlName="students">
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -74,17 +52,9 @@
                                 <div class="form-group">
                                     <span class="form-label">Flyning to</span>
 
-                                    <select
-                                        class="form-control"
-                                        id="arrival"
-                                        name="Service"
-                                        formControlName="arrival"
-                                        (change)="arrivalChanged()"
-                                    >
-                                        <option
-                                            [value]="serv.city_airport"
-                                            *ngFor="let serv of arrivalCities"
-                                        >
+                                    <select class="form-control" id="arrival" name="Service" formControlName="arrival"
+                                        (change)="arrivalChanged()">
+                                        <option [value]="serv.city_airport" *ngFor="let serv of arrivalCities">
                                             {{ serv.city_airport }}
                                         </option>
                                     </select>
@@ -93,15 +63,9 @@
 
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <span class="form-label" for="youths12_17"
-                                        >Youths from 12 to 17:</span
-                                    >
-                                    <select
-                                        class="form-control"
-                                        name="youths12_17"
-                                        id="youths12_17"
-                                        formControlName="youths12_17"
-                                    >
+                                    <span class="form-label" for="youths12_17">Youths from 12 to 17:</span>
+                                    <select class="form-control" name="youths12_17" id="youths12_17"
+                                        formControlName="youths12_17">
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -114,15 +78,9 @@
 
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <span class="form-label" for="children2_11"
-                                        >Children from 2 to 11:</span
-                                    >
-                                    <select
-                                        class="form-control"
-                                        name="children2_11"
-                                        id="children2_11"
-                                        formControlName="children2_11"
-                                    >
+                                    <span class="form-label" for="children2_11">Children from 2 to 11:</span>
+                                    <select class="form-control" name="children2_11" id="children2_11"
+                                        formControlName="children2_11">
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -138,26 +96,16 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <span class="form-label">Departing</span>
-                                    <input
-                                        type="date"
-                                        min="{{ dateToday() }}"
-                                        class="form-control"
-                                        formControlName="date"
-                                    />
+                                    <input type="date" min="{{ dateToday() }}" class="form-control"
+                                        formControlName="date" />
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <span class="form-label" for="class-type"
-                                        >Travel class</span
-                                    >
-                                    <select
-                                        class="form-control"
-                                        name="class-type"
-                                        formControlName="cabin_class"
-                                        id="cabin-class"
-                                    >
+                                    <span class="form-label" for="class-type">Travel class</span>
+                                    <select class="form-control" name="class-type" formControlName="cabin_class"
+                                        id="cabin-class">
                                         <option value="economy">Economy</option>
                                         <option value="premium">
                                             Premium economy
@@ -174,17 +122,9 @@
 
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <span
-                                        class="form-label"
-                                        for="toddlers_on_lap"
-                                        >Toddlers on lap:</span
-                                    >
-                                    <select
-                                        class="form-control"
-                                        name="toddlers_on_lap"
-                                        id="toddlers_on_lap"
-                                        formControlName="toddlers_on_lap"
-                                    >
+                                    <span class="form-label" for="toddlers_on_lap">Toddlers on lap:</span>
+                                    <select class="form-control" name="toddlers_on_lap" id="toddlers_on_lap"
+                                        formControlName="toddlers_on_lap">
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -197,17 +137,9 @@
 
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <span
-                                        class="form-label"
-                                        for="toddlers_in_own_seat"
-                                        >Toddlers in own seat:</span
-                                    >
-                                    <select
-                                        class="form-control"
-                                        name="toddlers_in_own_seat"
-                                        id="toddlers_in_own_seat"
-                                        formControlName="toddlers_in_own_seat"
-                                    >
+                                    <span class="form-label" for="toddlers_in_own_seat">Toddlers in own seat:</span>
+                                    <select class="form-control" name="toddlers_in_own_seat" id="toddlers_in_own_seat"
+                                        formControlName="toddlers_in_own_seat">
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -222,12 +154,8 @@
                         <div class="row">
                             <div class="col-md-14">
                                 <div class="form-btn">
-                                    <button
-                                        class="submit-btn"
-                                        type="submit"
-                                        id="search-flight"
-                                        [disabled]="!searchForm.valid"
-                                    >
+                                    <button class="submit-btn" type="submit" id="search-flight"
+                                        [disabled]="!searchForm.valid">
                                         Show flights
                                     </button>
                                 </div>
@@ -238,92 +166,87 @@
             </div>
         </div>
     </div>
-    <div class="container" style="overflow-y:scroll">
-        <div id="filters">
-            hi
-        </div>
-        <div id="flight-results">
-            <div *ngFor="let ticket of searchResults" class="ticket-block">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div>
-                                <b
-                                    >{{
+    <div class="container" style="height: 100%;">
+            <div id="flight-results-full">
+                <div id="filters">
+                    hi
+                </div>
+                <div id="flight-results">
+                <div *ngFor="let ticket of searchResults" class="ticket-block">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div>
+                                    <b>{{
                                         ticket.date_time_from | date : "HH:mm"
-                                    }}
-                                    -
-                                    {{
+                                        }}
+                                        -
+                                        {{
                                         ticket.date_time_in | date : "HH:mm"
-                                    }}</b
-                                >
+                                        }}</b>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div>
+                                    {{ ticket.airport_departure_IATA }}
+                                    {{ ticket.airport_departure_name }} -
+                                    {{ ticket.airport_arrival_IATA }}
+                                    {{ ticket.airport_arrival_name }}
+                                </div>
+                            </div>
+                            <div class="row"><br /></div>
+                            <div class="row">
+                                <div id="additional_info">
+                                    Company: {{ ticket.company }}
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div>
-                                {{ ticket.airport_departure_IATA }}
-                                {{ ticket.airport_departure_name }} -
-                                {{ ticket.airport_arrival_IATA }}
-                                {{ ticket.airport_arrival_name }}
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div>
+                                    <b>Duration: {{ ticket.duration }}</b>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row"><br /></div>
-                        <div class="row">
-                            <div id="additional_info">
-                                Company: {{ ticket.company }}
+                            <div class="row"><br /></div>
+                            <div class="row">
+                                <div>{{ ticket.route.stops }}</div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div>
-                                <b>Duration: {{ ticket.duration }}</b>
-                            </div>
-                        </div>
-                        <div class="row"><br /></div>
-                        <div class="row">
-                            <div>{{ ticket.route.stops }}</div>
-                        </div>
-                        <div class="row">
-                            <div *ngIf="ticket.route" class="ticket-route">
-                                <div
-                                    *ngFor="let route of ticket.route.transfers"
-                                >
-                                    <div
-                                        title="{{
+                            <div class="row">
+                                <div *ngIf="ticket.route" class="ticket-route">
+                                    <div *ngFor="let route of ticket.route.transfers">
+                                        <div title="{{
                                             route.waiting_time
-                                        }} stopover {{ route.airport_name }}"
-                                    >
-                                        {{ route.airport_IATA }}
+                                        }} stopover {{ route.airport_name }}">
+                                            {{ route.airport_IATA }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-1">
-                        <div class="outer">
-                            <div class="inner"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-1">
-                        <div class="row">
-                            <div>
-                                <b>{{ ticket.total_price }}</b>
+                        <div class="col-md-1">
+                            <div class="outer">
+                                <div class="inner"></div>
                             </div>
-                            <br />
-                            <div id="additional_info">
-                                {{ ticket.price_for_person }}/person
-                            </div>
-                            <br />
                         </div>
-                        <div class="row">
-                            <a id="order-button" href="{{ ticket.url }}"
-                                >Order</a
-                            >
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div>
+                                    <b>{{ ticket.total_price }}</b>
+                                </div>
+                                <br />
+                                <div id="additional_info">
+                                    {{ ticket.price_for_person }}/person
+                                </div>
+                                <br />
+                            </div>
+                            <div class="row">
+                                <a id="order-button" href="{{ ticket.url }}">Order</a>
+                            </div>
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
-        </div>
+
     </div>
 </div>

@@ -5,5 +5,5 @@ ENVIRONMENT = "development"
 DB_HOST = "localhost"
 DB_USER = "postgres"
 DB_PASS = "postgres"
-DB_PORT = 5444
+DB_PORT = 5433
 DB_NAME = "postgres"
