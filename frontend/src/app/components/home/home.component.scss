@@ -174,21 +174,50 @@
     opacity: 0.9;
 }
 
-#flight-results{
+#flight-results-full{
+    display: flex;
     position: absolute;
     top: 80%;
+    left: 5%;
     background-position: center;
-    width: 87%;
+    width: 90%;
+}
+#flight-results{
+    display: flex;
+    flex-direction: column;
+    top: 80%;
+    background-position: center;
+    margin-left: 1%;
+    width: 79%;
     border-radius: 6px;
     background-color: rgba(255, 255, 255, 0.744);
-    
+}
+
+#filters{
+    display: flex;
+    height: max-content;
+    position: sticky;
+    margin-top: 0px;
+    top: 5%;
+    background-position: center;
+    width: 20%;
+    border-radius: 6px;
+    border: 1px;
+    border-color: #191a1e;
+    background-color: rgba(245, 253, 255, 0.76);
+}
+
+.filters-main-header {
+    margin: 5px;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 #flight-results .ticket-block {
     margin: 20px;
     padding: 40px;
     border-radius: 6px;
-    border: 1px;
+    border: 1px solid;
     border-color: #191a1e;
     border: #191a1e;
     border-style: double;

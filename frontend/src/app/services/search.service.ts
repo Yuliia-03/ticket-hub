@@ -10,11 +10,11 @@ import { environment } from "src/environment/environment";
 })
 export class SearchService {
     constructor (private http: HttpClient) { }
-    apiUrl = environment.apiUrl; 
+    apiUrl = environment.apiUrl;
 
     search(flightSearchForm: FlightSearchForm): Observable<any> {
         let flightSearchUrl = this.apiUrl + "flight/search";
-        return this.http.post<any>(flightSearchUrl, 
+        return this.http.post<any>(flightSearchUrl,
             flightSearchForm
         //     {
         //     "departure": flightSearchForm.departure,
@@ -36,7 +36,7 @@ export class SearchService {
                 catchError(this.errorHandler)
             )
     }
-    
+
     get_city(): Observable<any> {
         let flightSearchUrl = this.apiUrl + "flight/search";
       return this.http.get<any>(flightSearchUrl).
@@ -48,10 +48,10 @@ export class SearchService {
             )
     }
 
-  
+
     private errorHandler(error: HttpErrorResponse) {
         console.log(error);
-    
+
         if (error.error instanceof ErrorEvent) {
           // A client-side or network error occurred. Handle it accordingly.
           console.error('An error occurred:', error.error.message);
@@ -79,7 +79,7 @@ export class SearchService {
 }
 
 export interface FlightSearchForm {
-    departure: string, 
+    departure: string,
     arrival: string,
     date: string,
     adults: number,
