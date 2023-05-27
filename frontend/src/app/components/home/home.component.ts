@@ -33,6 +33,30 @@ export class HomeComponent implements OnInit {
     departureCities: any = null;
     arrivalCities: any = null;
 
+    filterIsEmpty: boolean = true;
+    filterState: any = {
+      stops:{
+        title: "Stops",
+        values: [
+        {
+          key: 0,
+          value: 0,
+          title: 'Direct flight',
+          selected: false
+        },{
+          key: 1,
+          value: 1,
+          title: '1 stop',
+          selected: false
+        } ,{
+          key: 2,
+          value: 2,
+          title: '2+ stops',
+          selected: false
+        } 
+      ]}
+    };
+
     dateToday() {
         const now = new Date();
 
@@ -47,444 +71,432 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(): void {
         this.get_cities();
-        this.searchResults = [
-            {
-                date_time_from: '2023-07-02T06:10:00',
-                date_time_in: '2023-07-04T05:03:00',
-                price: '£604',
-                airport_departure_IATA: 'KRK',
-                airport_departure_name: 'J. Paul II Balice',
-                airport_arrival_IATA: 'BJX',
-                airport_arrival_name: 'Del Bajio',
-                route: {
-                    stops: 3,
-                    transfers: [
-                        {
-                            airport_IATA: 'POZ,',
-                            airport_name: 'Poznan Lawica',
-                            waiting_time: '15h 10m ',
-                        },
-                        {
-                            airport_IATA: 'STN-LGW,',
-                            airport_name: 'Airport change STN-LGW',
-                            waiting_time: '11h 10m ',
-                        },
-                        {
-                            airport_IATA: '...',
-                            airport_name: 'Los Angeles',
-                            waiting_time: '10h 40m ',
-                        },
-                    ],
-                },
-                duration: '54h 53m',
-                cabin_class: 'Standard',
-                company: 'Multiple Airlines',
-                url: 'https://www.kayak.co.uk/book/flight?code=QbGCGPm9KP.FTZUJ6SC9iEmFcdAejOqIg.75655.9cfaf7bb6208023fdf393ca64156c298&h=bf5586ac5570&_kw_pbranded=true&sub=E-16476addb3d&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M0',
-            },
-            {
-                date_time_from: '2023-07-02T21:40:00',
-                date_time_in: '2023-07-04T07:34:00',
-                price: '£761',
-                airport_departure_IATA: 'KRK',
-                airport_departure_name: 'J. Paul II Balice',
-                airport_arrival_IATA: 'BJX',
-                airport_arrival_name: 'Del Bajio',
-                route: {
-                    stops: 3,
-                    transfers: [
-                        {
-                            airport_IATA: 'ARN,',
-                            airport_name: 'Stockholm Arlanda',
-                            waiting_time: '6h 30m ',
-                        },
-                        {
-                            airport_IATA: 'CDG,',
-                            airport_name: 'Paris Charles de Gaulle',
-                            waiting_time: '6h 15m ',
-                        },
-                        {
-                            airport_IATA: '...',
-                            airport_name: 'Mexico City Benito Juarez',
-                            waiting_time: '11h 25m ',
-                        },
-                    ],
-                },
-                duration: '41h 54m',
-                cabin_class: 'Standard',
-                company: 'Norwegian, Aeromexico',
-                url: 'https://www.kayak.co.uk/book/flight?code=QbGCGPm9KP.RX7w4XG0_ZINUvH8T-y68A.95207.14785db9682b68ef26db85b6e93d8d62&h=ca9e3fbb4494&sub=E-1f57fa752e4&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M1',
-            },
-            {
-                date_time_from: '2023-07-02T06:00:00',
-                date_time_in: '2023-07-02T22:26:00',
-                price: '£790',
-                airport_departure_IATA: 'KRK',
-                airport_departure_name: 'J. Paul II Balice',
-                airport_arrival_IATA: 'BJX',
-                airport_arrival_name: 'Del Bajio',
-                route: {
-                    stops: 2,
-                    transfers: [
-                        {
-                            airport_IATA: 'FRA,',
-                            airport_name: 'Frankfurt am Main',
-                            waiting_time: '5h 55m ',
-                        },
-                        {
-                            airport_IATA: 'MEX',
-                            airport_name: 'Mexico City Benito Juarez',
-                            waiting_time: '3h 40m ',
-                        },
-                    ],
-                },
-                duration: '24h 26m',
-                cabin_class: 'Standard',
-                company: 'Lufthansa, Aeromexico',
-                url: 'https://www.kayak.co.uk/book/flight?code=QbGCGPm9KP.hVPlmUai5GwDzQq2dWkU9A.98951.2a4797fd931b562bad4ca9c5cec35298&h=7107113f20a6&sub=E-15e9794d60c&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M2',
-            },
-            {
-                date_time_from: '2023-07-02T06:00:00',
-                date_time_in: '2023-07-03T07:34:00',
-                price: '£791',
-                airport_departure_IATA: 'KRK',
-                airport_departure_name: 'J. Paul II Balice',
-                airport_arrival_IATA: 'BJX',
-                airport_arrival_name: 'Del Bajio',
-                route: {
-                    stops: 2,
-                    transfers: [
-                        {
-                            airport_IATA: 'FRA,',
-                            airport_name: 'Frankfurt am Main',
-                            waiting_time: '5h 55m ',
-                        },
-                        {
-                            airport_IATA: 'MEX',
-                            airport_name: 'Mexico City Benito Juarez',
-                            waiting_time: '12h 45m ',
-                        },
-                    ],
-                },
-                duration: '33h 34m',
-                cabin_class: 'Standard',
-                company: 'Lufthansa, Aeromexico',
-                url: 'https://www.kayak.co.uk/book/flight?code=QbGCGPm9KP.hVPlmUai5GwDzQq2dWkU9A.99076.7c8c499fa08fe0e367d54b17ee05575f&h=7c28ca11ba10&sub=E-15e9794d60c&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M4',
-            },
-            {
-                date_time_from: '2023-07-02T06:00:00',
-                date_time_in: '2023-07-03T11:19:00',
-                price: '£791',
-                airport_departure_IATA: 'KRK',
-                airport_departure_name: 'J. Paul II Balice',
-                airport_arrival_IATA: 'BJX',
-                airport_arrival_name: 'Del Bajio',
-                route: {
-                    stops: 2,
-                    transfers: [
-                        {
-                            airport_IATA: 'FRA,',
-                            airport_name: 'Frankfurt am Main',
-                            waiting_time: '5h 55m ',
-                        },
-                        {
-                            airport_IATA: 'MEX',
-                            airport_name: 'Mexico City Benito Juarez',
-                            waiting_time: '16h 35m ',
-                        },
-                    ],
-                },
-                duration: '37h 19m',
-                cabin_class: 'Standard',
-                company: 'Lufthansa, Aeromexico',
-                url: 'https://www.kayak.co.uk/book/flight?code=QbGCGPm9KP.hVPlmUai5GwDzQq2dWkU9A.99076.08dc32bcf9a612825a3085f2aa7c8649&h=903f30a85f3e&sub=E-15e9794d60c&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M5',
-            },
-            {
-                date_time_from: '2023-07-02T06:00:00',
-                date_time_in: '2023-07-03T14:35:00',
-                price: '£791',
-                airport_departure_IATA: 'KRK',
-                airport_departure_name: 'J. Paul II Balice',
-                airport_arrival_IATA: 'BJX',
-                airport_arrival_name: 'Del Bajio',
-                route: {
-                    stops: 2,
-                    transfers: [
-                        {
-                            airport_IATA: 'FRA,',
-                            airport_name: 'Frankfurt am Main',
-                            waiting_time: '5h 55m ',
-                        },
-                        {
-                            airport_IATA: 'MEX',
-                            airport_name: 'Mexico City Benito Juarez',
-                            waiting_time: '19h 55m ',
-                        },
-                    ],
-                },
-                duration: '40h 35m',
-                cabin_class: 'Standard',
-                company: 'Lufthansa, Aeromexico',
-                url: 'https://www.kayak.co.uk/book/flight?code=QbGCGPm9KP.hVPlmUai5GwDzQq2dWkU9A.99076.85649a56fda8b33f81e2df5b6ddaaa43&h=5db169ceecce&sub=E-15e9794d60c&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M6',
-            },
-            {
-                date_time_from: '2023-07-02T06:00:00',
-                date_time_in: '2023-07-03T16:21:00',
-                price: '£791',
-                airport_departure_IATA: 'KRK',
-                airport_departure_name: 'J. Paul II Balice',
-                airport_arrival_IATA: 'BJX',
-                airport_arrival_name: 'Del Bajio',
-                route: {
-                    stops: 2,
-                    transfers: [
-                        {
-                            airport_IATA: 'FRA,',
-                            airport_name: 'Frankfurt am Main',
-                            waiting_time: '5h 55m ',
-                        },
-                        {
-                            airport_IATA: 'MEX',
-                            airport_name: 'Mexico City Benito Juarez',
-                            waiting_time: '21h 35m ',
-                        },
-                    ],
-                },
-                duration: '42h 21m',
-                cabin_class: 'Standard',
-                company: 'Lufthansa, Aeromexico',
-                url: 'https://www.kayak.co.uk/book/flight?code=QbGCGPm9KP.hVPlmUai5GwDzQq2dWkU9A.99076.681756d4b47cb21da7026d6ef5a8b697&h=319426c0e096&sub=E-15e9794d60c&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M7',
-            },
-            {
-                date_time_from: '2023-07-02T06:00:00',
-                date_time_in: '2023-07-03T18:21:00',
-                price: '£791',
-                airport_departure_IATA: 'KRK',
-                airport_departure_name: 'J. Paul II Balice',
-                airport_arrival_IATA: 'BJX',
-                airport_arrival_name: 'Del Bajio',
-                route: {
-                    stops: 2,
-                    transfers: [
-                        {
-                            airport_IATA: 'FRA,',
-                            airport_name: 'Frankfurt am Main',
-                            waiting_time: '5h 55m ',
-                        },
-                        {
-                            airport_IATA: 'MEX',
-                            airport_name: 'Mexico City Benito Juarez',
-                            waiting_time: '23h 35m ',
-                        },
-                    ],
-                },
-                duration: '44h 21m',
-                cabin_class: 'Standard',
-                company: 'Lufthansa, Aeromexico',
-                url: 'https://www.kayak.co.uk/book/flight?code=QbGCGPm9KP.hVPlmUai5GwDzQq2dWkU9A.99076.d0b61786ba4e50a97ab5dfcbbd9fd554&h=c53595aff5e0&sub=E-15e9794d60c&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M8',
-            },
-            {
-                date_time_from: '2023-07-02T19:15:00',
-                date_time_in: '2023-07-03T22:26:00',
-                price: '£803',
-                airport_departure_IATA: 'KRK',
-                airport_departure_name: 'J.Paul II Balice',
-                airport_arrival_IATA: 'BJX',
-                airport_arrival_name: 'Del Bajio',
-                route: {
-                    stops: 2,
-                    transfers: [
-                        {
-                            airport_IATA: 'FRA,',
-                            airport_name: 'Frankfurt am Main',
-                            waiting_time: '16h 40m ',
-                        },
-                        {
-                            airport_IATA: 'MEX',
-                            airport_name: 'Mexico City Benito Juarez',
-                            waiting_time: '3h 40m ',
-                        },
-                    ],
-                },
-                duration: '35h 11m',
-                cabin_class: 'Standard',
-                company: 'Lufthansa, Aeromexico',
-                url: 'https://www.kayak.co.uk/book/flight?code=QbGCGPm9KP.hVPlmUai5GwDzQq2dWkU9A.100579.c36660b6e2d79d8618c4dbe2394ad0bc&h=dfa0bf7069b6&sub=E-15e9794d60c&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M9',
-            },
-            {
-                date_time_from: '2023-07-02T14:15:00',
-                date_time_in: '2023-07-03T22:26:00',
-                price: '£803',
-                airport_departure_IATA: 'KRK',
-                airport_departure_name: 'J. Paul II Balice',
-                airport_arrival_IATA: 'BJX',
-                airport_arrival_name: 'Del Bajio',
-                route: {
-                    stops: 2,
-                    transfers: [
-                        {
-                            airport_IATA: 'FRA,',
-                            airport_name: 'Frankfurt am Main',
-                            waiting_time: '21h 40m ',
-                        },
-                        {
-                            airport_IATA: 'MEX',
-                            airport_name: 'Mexico City Benito Juarez',
-                            waiting_time: '3h 40m ',
-                        },
-                    ],
-                },
-                duration: '40h 11m',
-                cabin_class: 'Standard',
-                company: 'Lufthansa, Aeromexico',
-                url: 'https://www.kayak.co.uk/book/flight?code=QbGCGPm9KP.hVPlmUai5GwDzQq2dWkU9A.100579.8039610be5ff9db966122e19bafbf6bf&h=f35f97394329&sub=E-15e9794d60c&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M10',
-            },
-            {
-                date_time_from: '2023-07-02T12:45:00',
-                date_time_in: '2023-07-03T22:26:00',
-                price: '£803',
-                airport_departure_IATA: 'KRK',
-                airport_departure_name: 'J. Paul II Balice',
-                airport_arrival_IATA: 'BJX',
-                airport_arrival_name: 'Del Bajio',
-                route: {
-                    stops: 2,
-                    transfers: [
-                        {
-                            airport_IATA: 'FRA,',
-                            airport_name: 'Frankfurt am Main',
-                            waiting_time: '23h 10m ',
-                        },
-                        {
-                            airport_IATA: 'MEX',
-                            airport_name: 'Mexico City Benito Juarez',
-                            waiting_time: '3h 40m ',
-                        },
-                    ],
-                },
-                duration: '41h 41m',
-                cabin_class: 'Standard',
-                company: 'Lufthansa, Aeromexico',
-                url: 'https://www.kayak.co.uk/book/flight?code=QbGCGPm9KP.hVPlmUai5GwDzQq2dWkU9A.100579.7a7a664b9f114fc725ae78a3dc195559&h=0acaa4fb080d&sub=E-15e9794d60c&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M11',
-            },
-            {
-                date_time_from: '2023-07-02T19:15:00',
-                date_time_in: '2023-07-04T07:34:00',
-                price: '£803',
-                airport_departure_IATA: 'KRK',
-                airport_departure_name: 'J. Paul II Balice',
-                airport_arrival_IATA: 'BJX',
-                airport_arrival_name: 'Del Bajio',
-                route: {
-                    stops: 2,
-                    transfers: [
-                        {
-                            airport_IATA: 'FRA,',
-                            airport_name: 'Frankfurt am Main',
-                            waiting_time: '16h 40m ',
-                        },
-                        {
-                            airport_IATA: 'MEX',
-                            airport_name: 'Mexico City Benito Juarez',
-                            waiting_time: '12h 45m ',
-                        },
-                    ],
-                },
-                duration: '44h 19m',
-                cabin_class: 'Standard',
-                company: 'Lufthansa, Aeromexico',
-                url: 'https://www.kayak.co.uk/book/flight?code=QbGCGPm9KP.hVPlmUai5GwDzQq2dWkU9A.100579.cda00280fdedc21cb44fff164591d9ad&h=dafc1db6ba43&sub=E-15e9794d60c&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M12',
-            },
-            {
-                date_time_from: '2023-07-02T19:15:00',
-                date_time_in: '2023-07-04T11:19:00',
-                price: '£803',
-                airport_departure_IATA: 'KRK',
-                airport_departure_name: 'J. Paul II Balice',
-                airport_arrival_IATA: 'BJX',
-                airport_arrival_name: 'Del Bajio',
-                route: {
-                    stops: 2,
-                    transfers: [
-                        {
-                            airport_IATA: 'FRA,',
-                            airport_name: 'Frankfurt am Main',
-                            waiting_time: '16h 40m ',
-                        },
-                        {
-                            airport_IATA: 'MEX',
-                            airport_name: 'Mexico City Benito Juarez',
-                            waiting_time: '16h 35m ',
-                        },
-                    ],
-                },
-                duration: '48h 04m',
-                cabin_class: 'Standard',
-                company: 'Lufthansa, Aeromexico',
-                url: 'https://www.kayak.co.uk/book/flight?code=QbGCGPm9KP.hVPlmUai5GwDzQq2dWkU9A.100579.baea1f28e1f4f3a40c923422c66d761e&h=78aa50e3f03e&sub=E-15e9794d60c&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M13',
-            },
-            {
-                date_time_from: '2023-07-02T14:15:00',
-                date_time_in: '2023-07-04T07:34:00',
-                price: '£803',
-                airport_departure_IATA: 'KRK',
-                airport_departure_name: 'J. Paul II Balice',
-                airport_arrival_IATA: 'BJX',
-                airport_arrival_name: 'Del Bajio',
-                route: {
-                    stops: 2,
-                    transfers: [
-                        {
-                            airport_IATA: 'FRA,',
-                            airport_name: 'Frankfurt am Main',
-                            waiting_time: '21h 40m ',
-                        },
-                        {
-                            airport_IATA: 'MEX',
-                            airport_name: 'Mexico City Benito Juarez',
-                            waiting_time: '12h 45m ',
-                        },
-                    ],
-                },
-                duration: '49h 19m',
-                cabin_class: 'Standard',
-                company: 'Lufthansa, Aeromexico',
-                url: 'https://www.kayak.co.uk/book/flight?code=QbGCGPm9KP.hVPlmUai5GwDzQq2dWkU9A.100579.d760fd94ccbbc018cd129734598a096b&h=fe1f1104d027&sub=E-15e9794d60c&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M14',
-            },
-            {
-                date_time_from: '2023-07-02T12:45:00',
-                date_time_in: '2023-07-04T07:34:00',
-                price: '£803',
-                airport_departure_IATA: 'KRK',
-                airport_departure_name: 'J. Paul II Balice',
-                airport_arrival_IATA: 'BJX',
-                airport_arrival_name: 'Del Bajio',
-                route: {
-                    stops: 2,
-                    transfers: [
-                        {
-                            airport_IATA: 'FRA,',
-                            airport_name: 'Frankfurt am Main',
-                            waiting_time: '23h 10m ',
-                        },
-                        {
-                            airport_IATA: 'MEX',
-                            airport_name: 'Mexico City Benito Juarez',
-                            waiting_time: '12h 45m ',
-                        },
-                    ],
-                },
-                duration: '50h 49m',
-                cabin_class: 'Standard',
-                company: 'Lufthansa, Aeromexico',
-                url: 'https://www.kayak.co.uk/book/flight?code=QbGCGPm9KP.hVPlmUai5GwDzQq2dWkU9A.100579.a7abcfa7d1fd905c8ce4d06662e0d45f&h=fe2800800ee1&sub=E-15e9794d60c&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M15',
-            },
-        ];
+      //   this.searchResults = [
+      //     {
+      //         "date_time_from": "2023-07-01T14:55:00",
+      //         "date_time_in": "2023-07-02T22:10:00",
+      //         "total_price": "£922",
+      //         "price_for_person": "",
+      //         "airport_departure_IATA": "AUS",
+      //         "airport_departure_name": "Austin Bergstrom",
+      //         "airport_arrival_IATA": "LHR",
+      //         "airport_arrival_name": "Heathrow",
+      //         "route": {
+      //             "stops": "1 stop",
+      //             "transfers": [
+      //                 {
+      //                     "airport_IATA": "ORD",
+      //                     "airport_name": "Chicago O'Hare Intl",
+      //                     "waiting_time": "14h 34m "
+      //                 }
+      //             ]
+      //         },
+      //         "duration": "25h 15m",
+      //         "cabin_class": "Economy Classic",
+      //         "company": "Finnair",
+      //         "url": "https://www.kayak.co.uk/book/flight?code=RcHiPb-tDR.kUvKXh-Ch4QCTw-9KaXjEA.113727.42bc284d817c47d96f4be3ceeab42cfa&h=a6c490a709a3&_kw_pbranded=true&sub=E-113c2190e6e&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M1"
+      //     },
+      //     {
+      //         "date_time_from": "2023-07-01T16:42:00",
+      //         "date_time_in": "2023-07-03T17:00:00",
+      //         "total_price": "£1,019",
+      //         "price_for_person": "",
+      //         "airport_departure_IATA": "AUS",
+      //         "airport_departure_name": "Austin Bergstrom",
+      //         "airport_arrival_IATA": "LHR",
+      //         "airport_arrival_name": "Heathrow",
+      //         "route": {
+      //             "stops": "2 stops",
+      //             "transfers": [
+      //                 {
+      //                     "airport_IATA": "EWR,",
+      //                     "airport_name": "Newark",
+      //                     "waiting_time": "19h 45m "
+      //                 },
+      //                 {
+      //                     "airport_IATA": "ARN",
+      //                     "airport_name": "Stockholm Arlanda",
+      //                     "waiting_time": "8h 10m "
+      //                 }
+      //             ]
+      //         },
+      //         "duration": "42h 18m",
+      //         "cabin_class": "Economy Classic",
+      //         "company": "Scandinavian Airlines",
+      //         "url": "https://www.kayak.co.uk/book/flight?code=RcHiPb-tDR.kUvKXh-Ch4QCTw-9KaXjEA.125702.8aaf64e41533309a7a0f53404462c680&h=66f60d85224c&_kw_pbranded=true&sub=E-1f9370f7100&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M2"
+      //     },
+      //     {
+      //         "date_time_from": "2023-07-01T17:49:00",
+      //         "date_time_in": "2023-07-02T20:35:00",
+      //         "total_price": "£1,082",
+      //         "price_for_person": "",
+      //         "airport_departure_IATA": "AUS",
+      //         "airport_departure_name": "Austin Bergstrom",
+      //         "airport_arrival_IATA": "LHR",
+      //         "airport_arrival_name": "Heathrow",
+      //         "route": {
+      //             "stops": "2 stops",
+      //             "transfers": [
+      //                 {
+      //                     "airport_IATA": "IAH,",
+      //                     "airport_name": "Houston George Bush Intcntl",
+      //                     "waiting_time": "2h 04m "
+      //                 },
+      //                 {
+      //                     "airport_IATA": "IST",
+      //                     "airport_name": "Istanbul",
+      //                     "waiting_time": "1h 40m "
+      //                 }
+      //             ]
+      //         },
+      //         "duration": "20h 46m",
+      //         "cabin_class": "Economy Classic",
+      //         "company": "Turkish Airlines",
+      //         "url": "https://www.kayak.co.uk/book/flight?code=RcHiPb-tDR.kUvKXh-Ch4QCTw-9KaXjEA.133431.addae9b682466afb50cd22bbb8b9320f&h=9aa0858d9769&_kw_pbranded=true&sub=E-1e1136fcfe3&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M4"
+      //     },
+      //     {
+      //         "date_time_from": "2023-07-01T17:49:00",
+      //         "date_time_in": "2023-07-02T22:25:00",
+      //         "total_price": "£1,082",
+      //         "price_for_person": "",
+      //         "airport_departure_IATA": "AUS",
+      //         "airport_departure_name": "Austin Bergstrom",
+      //         "airport_arrival_IATA": "LHR",
+      //         "airport_arrival_name": "Heathrow",
+      //         "route": {
+      //             "stops": "2 stops",
+      //             "transfers": [
+      //                 {
+      //                     "airport_IATA": "IAH,",
+      //                     "airport_name": "Houston George Bush Intcntl",
+      //                     "waiting_time": "2h 04m "
+      //                 },
+      //                 {
+      //                     "airport_IATA": "IST",
+      //                     "airport_name": "Istanbul",
+      //                     "waiting_time": "3h 30m "
+      //                 }
+      //             ]
+      //         },
+      //         "duration": "22h 36m",
+      //         "cabin_class": "Economy Classic",
+      //         "company": "Turkish Airlines",
+      //         "url": "https://www.kayak.co.uk/book/flight?code=RcHiPb-tDR.kUvKXh-Ch4QCTw-9KaXjEA.133431.6707c23fda9ac0dd79f1a95f99b00a3d&h=0b95166139dc&_kw_pbranded=true&sub=E-1e1136fcfe3&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M5"
+      //     },
+      //     {
+      //         "date_time_from": "2023-07-01T17:49:00",
+      //         "date_time_in": "2023-07-03T09:50:00",
+      //         "total_price": "£1,082",
+      //         "price_for_person": "",
+      //         "airport_departure_IATA": "AUS",
+      //         "airport_departure_name": "Austin Bergstrom",
+      //         "airport_arrival_IATA": "LHR",
+      //         "airport_arrival_name": "Heathrow",
+      //         "route": {
+      //             "stops": "2 stops",
+      //             "transfers": [
+      //                 {
+      //                     "airport_IATA": "IAH,",
+      //                     "airport_name": "Houston George Bush Intcntl",
+      //                     "waiting_time": "2h 04m "
+      //                 },
+      //                 {
+      //                     "airport_IATA": "IST",
+      //                     "airport_name": "Istanbul",
+      //                     "waiting_time": "15h 00m "
+      //                 }
+      //             ]
+      //         },
+      //         "duration": "34h 01m",
+      //         "cabin_class": "Economy Classic",
+      //         "company": "Turkish Airlines",
+      //         "url": "https://www.kayak.co.uk/book/flight?code=RcHiPb-tDR.kUvKXh-Ch4QCTw-9KaXjEA.133431.3818ce556292ed91f4d45a54e6746c4c&h=83b1b1acc7b9&_kw_pbranded=true&sub=E-1e1136fcfe3&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M7"
+      //     },
+      //     {
+      //         "date_time_from": "2023-07-01T17:49:00",
+      //         "date_time_in": "2023-07-03T12:30:00",
+      //         "total_price": "£1,082",
+      //         "price_for_person": "",
+      //         "airport_departure_IATA": "AUS",
+      //         "airport_departure_name": "Austin Bergstrom",
+      //         "airport_arrival_IATA": "LHR",
+      //         "airport_arrival_name": "Heathrow",
+      //         "route": {
+      //             "stops": "2 stops",
+      //             "transfers": [
+      //                 {
+      //                     "airport_IATA": "IAH,",
+      //                     "airport_name": "Houston George Bush Intcntl",
+      //                     "waiting_time": "2h 04m "
+      //                 },
+      //                 {
+      //                     "airport_IATA": "IST",
+      //                     "airport_name": "Istanbul",
+      //                     "waiting_time": "17h 35m "
+      //                 }
+      //             ]
+      //         },
+      //         "duration": "36h 41m",
+      //         "cabin_class": "Economy Classic",
+      //         "company": "Turkish Airlines",
+      //         "url": "https://www.kayak.co.uk/book/flight?code=RcHiPb-tDR.kUvKXh-Ch4QCTw-9KaXjEA.133431.d18de5b84eed047dfe4c670f71459486&h=c7713355db9f&_kw_pbranded=true&sub=E-1e1136fcfe3&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M8"
+      //     },
+      //     {
+      //         "date_time_from": "2023-07-01T17:49:00",
+      //         "date_time_in": "2023-07-03T15:05:00",
+      //         "total_price": "£1,082",
+      //         "price_for_person": "",
+      //         "airport_departure_IATA": "AUS",
+      //         "airport_departure_name": "Austin Bergstrom",
+      //         "airport_arrival_IATA": "LHR",
+      //         "airport_arrival_name": "Heathrow",
+      //         "route": {
+      //             "stops": "2 stops",
+      //             "transfers": [
+      //                 {
+      //                     "airport_IATA": "IAH,",
+      //                     "airport_name": "Houston George Bush Intcntl",
+      //                     "waiting_time": "2h 04m "
+      //                 },
+      //                 {
+      //                     "airport_IATA": "IST",
+      //                     "airport_name": "Istanbul",
+      //                     "waiting_time": "20h 20m "
+      //                 }
+      //             ]
+      //         },
+      //         "duration": "39h 16m",
+      //         "cabin_class": "Economy Classic",
+      //         "company": "Turkish Airlines",
+      //         "url": "https://www.kayak.co.uk/book/flight?code=RcHiPb-tDR.kUvKXh-Ch4QCTw-9KaXjEA.133431.7d42681986047aba7e3ff63e42af07dc&h=2e1f98296669&_kw_pbranded=true&sub=E-1e1136fcfe3&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M9"
+      //     },
+      //     {
+      //         "date_time_from": "2023-07-01T17:49:00",
+      //         "date_time_in": "2023-07-03T16:45:00",
+      //         "total_price": "£1,082",
+      //         "price_for_person": "",
+      //         "airport_departure_IATA": "AUS",
+      //         "airport_departure_name": "Austin Bergstrom",
+      //         "airport_arrival_IATA": "LHR",
+      //         "airport_arrival_name": "Heathrow",
+      //         "route": {
+      //             "stops": "2 stops",
+      //             "transfers": [
+      //                 {
+      //                     "airport_IATA": "IAH,",
+      //                     "airport_name": "Houston George Bush Intcntl",
+      //                     "waiting_time": "2h 04m "
+      //                 },
+      //                 {
+      //                     "airport_IATA": "IST",
+      //                     "airport_name": "Istanbul",
+      //                     "waiting_time": "22h 00m "
+      //                 }
+      //             ]
+      //         },
+      //         "duration": "40h 56m",
+      //         "cabin_class": "Economy Classic",
+      //         "company": "Turkish Airlines",
+      //         "url": "https://www.kayak.co.uk/book/flight?code=RcHiPb-tDR.kUvKXh-Ch4QCTw-9KaXjEA.133431.f8316586c4e581555071777494d6c896&h=06b4e5181ae0&_kw_pbranded=true&sub=E-1e1136fcfe3&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M10"
+      //     },
+      //     {
+      //         "date_time_from": "2023-07-01T12:00:00",
+      //         "date_time_in": "2023-07-02T20:55:00",
+      //         "total_price": "£1,137",
+      //         "price_for_person": "",
+      //         "airport_departure_IATA": "AUS",
+      //         "airport_departure_name": "Austin Bergstrom",
+      //         "airport_arrival_IATA": "LHR",
+      //         "airport_arrival_name": "Heathrow",
+      //         "route": {
+      //             "stops": "1 stop",
+      //             "transfers": [
+      //                 {
+      //                     "airport_IATA": "IAD",
+      //                     "airport_name": "Washington, D.C. Dulles Intl",
+      //                     "waiting_time": "16h 10m "
+      //                 }
+      //             ]
+      //         },
+      //         "duration": "26h 55m",
+      //         "cabin_class": "Economy Classic",
+      //         "company": "Lufthansa",
+      //         "url": "https://www.kayak.co.uk/book/flight?code=RcHiPb-tDR.3OUpS3kmFJuhkszVg4LUcQ.140310.021f22a8e5652ff23b32d81cf6cd03aa&h=337f2ba30d52&_kw_pbranded=true&sub=E-198e0bba03c&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M12"
+      //     },
+      //     {
+      //         "date_time_from": "2023-07-01T07:15:00",
+      //         "date_time_in": "2023-07-02T20:55:00",
+      //         "total_price": "£1,137",
+      //         "price_for_person": "",
+      //         "airport_departure_IATA": "AUS",
+      //         "airport_departure_name": "Austin Bergstrom",
+      //         "airport_arrival_IATA": "LHR",
+      //         "airport_arrival_name": "Heathrow",
+      //         "route": {
+      //             "stops": "1 stop",
+      //             "transfers": [
+      //                 {
+      //                     "airport_IATA": "IAD",
+      //                     "airport_name": "Washington, D.C. Dulles Intl",
+      //                     "waiting_time": "20h 55m "
+      //                 }
+      //             ]
+      //         },
+      //         "duration": "31h 40m",
+      //         "cabin_class": "Economy Classic",
+      //         "company": "Lufthansa",
+      //         "url": "https://www.kayak.co.uk/book/flight?code=RcHiPb-tDR.3OUpS3kmFJuhkszVg4LUcQ.140310.14e85f6f2fcf460bfdef9f92107bdf91&h=93fcab032077&_kw_pbranded=true&sub=E-198e0bba03c&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M13"
+      //     },
+      //     {
+      //         "date_time_from": "2023-07-01T14:34:00",
+      //         "date_time_in": "2023-07-03T09:00:00",
+      //         "total_price": "£1,138",
+      //         "price_for_person": "",
+      //         "airport_departure_IATA": "AUS",
+      //         "airport_departure_name": "Austin Bergstrom",
+      //         "airport_arrival_IATA": "LHR",
+      //         "airport_arrival_name": "Heathrow",
+      //         "route": {
+      //             "stops": "2 stops",
+      //             "transfers": [
+      //                 {
+      //                     "airport_IATA": "IAH,",
+      //                     "airport_name": "Houston George Bush Intcntl",
+      //                     "waiting_time": "20h 15m "
+      //                 },
+      //                 {
+      //                     "airport_IATA": "ORD",
+      //                     "airport_name": "Chicago O'Hare Intl",
+      //                     "waiting_time": "4h 06m "
+      //                 }
+      //             ]
+      //         },
+      //         "duration": "36h 26m",
+      //         "cabin_class": "Economy Classic",
+      //         "company": "Lufthansa",
+      //         "url": "https://www.kayak.co.uk/book/flight?code=RcHiPb-tDR.3OUpS3kmFJuhkszVg4LUcQ.140432.03e3f444a0b78185a5cd965bf1168a4a&h=7d17387f746d&_kw_pbranded=true&sub=E-11f0d597918&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M14"
+      //     },
+      //     {
+      //         "date_time_from": "2023-07-01T14:34:00",
+      //         "date_time_in": "2023-07-03T09:00:00",
+      //         "total_price": "£1,138",
+      //         "price_for_person": "",
+      //         "airport_departure_IATA": "AUS",
+      //         "airport_departure_name": "Austin Bergstrom",
+      //         "airport_arrival_IATA": "LHR",
+      //         "airport_arrival_name": "Heathrow",
+      //         "route": {
+      //             "stops": "2 stops",
+      //             "transfers": [
+      //                 {
+      //                     "airport_IATA": "IAH,",
+      //                     "airport_name": "Houston George Bush Intcntl",
+      //                     "waiting_time": "0h 40m "
+      //                 },
+      //                 {
+      //                     "airport_IATA": "ORD",
+      //                     "airport_name": "Chicago O'Hare Intl",
+      //                     "waiting_time": "23h 44m "
+      //                 }
+      //             ]
+      //         },
+      //         "duration": "36h 26m",
+      //         "cabin_class": "Economy Classic",
+      //         "company": "Lufthansa",
+      //         "url": "https://www.kayak.co.uk/book/flight?code=RcHiPb-tDR.3OUpS3kmFJuhkszVg4LUcQ.140432.fbbc3890896c54e082d48dcb331c1759&h=219302c2c5dd&_kw_pbranded=true&sub=E-11f0d597918&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M15"
+      //     },
+      //     {
+      //         "date_time_from": "2023-07-01T12:20:00",
+      //         "date_time_in": "2023-07-03T09:00:00",
+      //         "total_price": "£1,138",
+      //         "price_for_person": "",
+      //         "airport_departure_IATA": "AUS",
+      //         "airport_departure_name": "Austin Bergstrom",
+      //         "airport_arrival_IATA": "LHR",
+      //         "airport_arrival_name": "Heathrow",
+      //         "route": {
+      //             "stops": "2 stops",
+      //             "transfers": [
+      //                 {
+      //                     "airport_IATA": "IAH,",
+      //                     "airport_name": "Houston George Bush Intcntl",
+      //                     "waiting_time": "22h 34m "
+      //                 },
+      //                 {
+      //                     "airport_IATA": "ORD",
+      //                     "airport_name": "Chicago O'Hare Intl",
+      //                     "waiting_time": "4h 06m "
+      //                 }
+      //             ]
+      //         },
+      //         "duration": "38h 40m",
+      //         "cabin_class": "Economy Classic",
+      //         "company": "Lufthansa",
+      //         "url": "https://www.kayak.co.uk/book/flight?code=RcHiPb-tDR.3OUpS3kmFJuhkszVg4LUcQ.140432.1f7bff9ac85d8e147d174b5bffd7f8d7&h=19d2db262e02&_kw_pbranded=true&sub=E-11f0d597918&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M17"
+      //     },
+      //     {
+      //         "date_time_from": "2023-07-01T12:20:00",
+      //         "date_time_in": "2023-07-03T09:00:00",
+      //         "total_price": "£1,138",
+      //         "price_for_person": "",
+      //         "airport_departure_IATA": "AUS",
+      //         "airport_departure_name": "Austin Bergstrom",
+      //         "airport_arrival_IATA": "LHR",
+      //         "airport_arrival_name": "Heathrow",
+      //         "route": {
+      //             "stops": "2 stops",
+      //             "transfers": [
+      //                 {
+      //                     "airport_IATA": "IAH,",
+      //                     "airport_name": "Houston George Bush Intcntl",
+      //                     "waiting_time": "2h 59m "
+      //                 },
+      //                 {
+      //                     "airport_IATA": "ORD",
+      //                     "airport_name": "Chicago O'Hare Intl",
+      //                     "waiting_time": "23h 44m "
+      //                 }
+      //             ]
+      //         },
+      //         "duration": "38h 40m",
+      //         "cabin_class": "Economy Classic",
+      //         "company": "Lufthansa",
+      //         "url": "https://www.kayak.co.uk/book/flight?code=RcHiPb-tDR.3OUpS3kmFJuhkszVg4LUcQ.140432.2ed3412ef299d27691d88d1404b5ffab&h=0323edc6715a&_kw_pbranded=true&sub=E-11f0d597918&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M18"
+      //     },
+      //     {
+      //         "date_time_from": "2023-07-01T14:34:00",
+      //         "date_time_in": "2023-07-03T11:25:00",
+      //         "total_price": "£1,138",
+      //         "price_for_person": "",
+      //         "airport_departure_IATA": "AUS",
+      //         "airport_departure_name": "Austin Bergstrom",
+      //         "airport_arrival_IATA": "LHR",
+      //         "airport_arrival_name": "Heathrow",
+      //         "route": {
+      //             "stops": "2 stops",
+      //             "transfers": [
+      //                 {
+      //                     "airport_IATA": "IAH,",
+      //                     "airport_name": "Houston George Bush Intcntl",
+      //                     "waiting_time": "20h 15m "
+      //                 },
+      //                 {
+      //                     "airport_IATA": "ORD",
+      //                     "airport_name": "Chicago O'Hare Intl",
+      //                     "waiting_time": "6h 36m "
+      //                 }
+      //             ]
+      //         },
+      //         "duration": "38h 51m",
+      //         "cabin_class": "Economy Classic",
+      //         "company": "Lufthansa",
+      //         "url": "https://www.kayak.co.uk/book/flight?code=RcHiPb-tDR.3OUpS3kmFJuhkszVg4LUcQ.140432.ae8e7b15949c335e2111ef68c808fd21&h=fde496dc92de&_kw_pbranded=true&sub=E-11f0d597918&payment=0.00:GBP:MC_D:Mastercard%20Debit:true&pageOrigin=F..RP.FE.M19"
+      //     }
+      // ];
         this.filteredResults = this.searchResults;
     }
 
     search(): void {
-        console.log('searchForm', this.searchForm.value);
-
         this.searchService
             .search(
                 /* {
@@ -522,9 +534,70 @@ export class HomeComponent implements OnInit {
             .subscribe((resp: any) => {
                 console.log('resp', resp);
                 this.searchResults = resp;
+                this.filteredResults = resp;
+                this.filterList();
             });
     }
 
+    filtersChange(event: any, filter: any, group: any) {
+      this.filterIsEmpty = true;
+      for (let filterGroup in this.filterState) {
+        for (let filterValue of this.filterState[filterGroup].values) {
+          if (filterGroup == group && filterValue.key == filter.key) {
+            filterValue.selected = event.target.checked;
+          }
+          if (this.filterIsEmpty == true) {
+            this.filterIsEmpty = !filterValue.selected
+          }
+        }
+      }
+      if (this.filterIsEmpty == false) {
+        this.filterList();
+      } else {
+        this.filteredResults = this.searchResults;
+      }
+    }
+
+    filterList() {
+      if (!this.filterIsEmpty) {
+        this.filteredResults = [];
+        for (let searchResult of this.searchResults) {
+          if (this.checkIfItemSatisfiesStopsFilter(searchResult)) {
+            this.filteredResults.push(searchResult);
+          }
+        }
+      }
+    }
+
+    checkIfItemSatisfiesStopsFilter(item: any): boolean {
+      if (item.route.transfers.length == 0) {
+        for (let stop of this.filterState.stops.values) {
+          if (stop.value == 0 && stop.selected) {
+            return true;
+          }
+        }
+      }
+      if (item.route.transfers.length == 1) {
+        for (let stop of this.filterState.stops.values) {
+          if (stop.value == 1 && stop.selected) {
+            return true;
+          }
+        }
+      }
+      if (item.route.transfers.length >= 2) {
+        for (let stop of this.filterState.stops.values) {
+          if (stop.value == 2 && stop.selected) {
+            return true;
+          }
+        }
+      }
+      return false
+    }
+
+    toggleSection(section: any) {
+      section.classList.toggle('active-sub-section');
+      
+    }
     departureChanged() {
         let departureAirport = this.searchForm.get('departure')?.value;
         this.departureCities = this.cities;
