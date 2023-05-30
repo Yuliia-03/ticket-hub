@@ -171,13 +171,14 @@
             <div id="filters">
                 <span class="filters-main-header">Filters</span>
                 <div class="filters-body">
+                    <div>
                     <button class="filters-sub-header" id="filters-stops"
                         (click)="toggleSection(filterStops)">Stops</button>
                     <div #filterStops class="filters-sub-section">
                         <div *ngFor="let filter of filterState.stops.values; let i = index" class="filters-item">
                             <div style="display: flex; align-items: center;">
                                 <input type="checkbox" class="checkbox-input" id="checkbox-{{i}}"
-                                    (change)="filtersChange($event, filter, 'stops')">
+                                    (change)="filtersChange($event, filter, 'stops')" checked>
                                 <label for="checkbox-{{i}}" class="checkbox-label">
                                     <span class="checkbox">
                                     </span>
@@ -190,10 +191,29 @@
                             </div>
                         </div>
                     </div>
+                    </div>
+                    <div>
+
                     <button class="filters-sub-header" id="filters-airports"
                         (click)="toggleSection(filterAirports)">Airports</button>
                     <div #filterAirports class="filters-sub-section">
                         <!--                      TODO:Implement    -->
+                        <div *ngFor="let filter of filterState.airports.values; let j = index" class="filters-item">
+                            <div style="display: flex; align-items: center;">
+                                <input type="checkbox" class="checkbox-input" id="checkbox-{{j}}"
+                                    (change)="filtersChange($event, filter, 'airports')" checked>
+                                <label for="checkbox-{{j}}" class="checkbox-label">
+                                    <span class="checkbox">
+                                    </span>
+                                </label>
+                                <span class="filter-value">
+                                    {{filter.title}}
+                                </span>
+                            </div>
+                            <div class="filter-value-info">
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -253,7 +273,7 @@
                                     <b>{{ ticket.total_price }}</b>
                                 </div>
                                 <br />
-                                <div id="additional_info">
+                                <div *ngIf="ticket.price_for_person" id="additional_info">
                                     {{ ticket.price_for_person }}/person
                                 </div>
                                 <br />

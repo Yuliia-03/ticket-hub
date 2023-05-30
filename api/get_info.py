@@ -26,7 +26,7 @@ class Scraping():
         button = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, xp_popup_close)))
         button.click()
         print('Cookies closed')
-        sleep(0.3)
+        sleep(0.5)
 
         
     def get_date_time(self):

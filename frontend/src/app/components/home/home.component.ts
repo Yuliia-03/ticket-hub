@@ -28,10 +28,12 @@ export class HomeComponent implements OnInit {
     });
 
     searchResults: any = null;
-    filteredResults: any = null;
+    filteredResults: any = this.searchResults;
     cities: any = null;
     departureCities: any = null;
-    arrivalCities: any = null;
+  arrivalCities: any = null;
+  
+  directions = new Set<string>();
 
     filterIsEmpty: boolean = true;
     filterState: any = {
@@ -42,21 +44,27 @@ export class HomeComponent implements OnInit {
           key: 0,
           value: 0,
           title: 'Direct flight',
-          selected: false
+          selected: true
         },{
           key: 1,
           value: 1,
           title: '1 stop',
-          selected: false
+          selected: true
         } ,{
           key: 2,
           value: 2,
           title: '2+ stops',
-          selected: false
+          selected: true
         } 
-      ]}
-    };
-
+        ]
+      },
+      airports: {
+        title: "Airports",
+        values: []
+      }
+      
+  };
+  
     dateToday() {
         const now = new Date();
 
@@ -534,8 +542,12 @@ export class HomeComponent implements OnInit {
             .subscribe((resp: any) => {
                 console.log('resp', resp);
                 this.searchResults = resp;
-                this.filteredResults = resp;
-                this.filterList();
+              this.filteredResults = resp;
+              for (let searchResult of this.searchResults) {
+                this.getAllAirports(searchResult);
+                console.log(this.filterState)
+              }
+                //this.filterList();
             });
     }
 
@@ -547,7 +559,7 @@ export class HomeComponent implements OnInit {
             filterValue.selected = event.target.checked;
           }
           if (this.filterIsEmpty == true) {
-            this.filterIsEmpty = !filterValue.selected
+            this.filterIsEmpty = filterValue.selected
           }
         }
       }
@@ -558,46 +570,86 @@ export class HomeComponent implements OnInit {
       }
     }
 
-    filterList() {
+  filterList() {
+    
+
       if (!this.filterIsEmpty) {
-        this.filteredResults = [];
+        this.filteredResults = this.searchResults;
+        
+
         for (let searchResult of this.searchResults) {
-          if (this.checkIfItemSatisfiesStopsFilter(searchResult)) {
-            this.filteredResults.push(searchResult);
+
+          if (!this.checkIfItemSatisfiesAirportsFilter(searchResult)) {
+            this.filteredResults = this.filteredResults.filter((element: any) => {
+              return element !== searchResult;
+            });;
+          }
+          if (!this.checkIfItemSatisfiesStopsFilter(searchResult)) {
+            this.filteredResults = this.filteredResults.filter((element: any) => {
+              return element !== searchResult;
+            });;
           }
         }
       }
     }
+    
 
     checkIfItemSatisfiesStopsFilter(item: any): boolean {
       if (item.route.transfers.length == 0) {
         for (let stop of this.filterState.stops.values) {
-          if (stop.value == 0 && stop.selected) {
-            return true;
+          if (stop.value == 0 && !stop.selected) {
+            return false;
           }
         }
       }
       if (item.route.transfers.length == 1) {
         for (let stop of this.filterState.stops.values) {
-          if (stop.value == 1 && stop.selected) {
-            return true;
+          if (stop.value == 1 && !stop.selected) {
+            return false;
           }
         }
       }
       if (item.route.transfers.length >= 2) {
         for (let stop of this.filterState.stops.values) {
-          if (stop.value == 2 && stop.selected) {
-            return true;
+          if (stop.value == 2 && !stop.selected) {
+            return false;
           }
         }
       }
-      return false
+      return true
+  }
+
+  getAllAirports(item: any): void {
+    if (!this.directions.has(item.airport_departure_name)) {
+      this.directions.add(item.airport_departure_name)
+      this.filterState.airports.values.push({
+        key: this.directions.size,
+        value: item.airport_departure_name,
+        title: item.airport_departure_name,
+        selected: true
+        
+      })
     }
+
+  }
+
+  checkIfItemSatisfiesAirportsFilter(item: any): boolean {
+
+    for (let airport of this.filterState.airports.values) {
+      if (item.airport_departure_name == airport.title && !airport.selected) {
+        return false;
+      }
+    }
+    return true
+  }
+
+
 
     toggleSection(section: any) {
       section.classList.toggle('active-sub-section');
       
-    }
+  }
+  
     departureChanged() {
         let departureAirport = this.searchForm.get('departure')?.value;
         this.departureCities = this.cities;
