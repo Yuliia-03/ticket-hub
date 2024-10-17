@@ -29,7 +29,7 @@ def form_url(searchParams: schemas.SearchParams, db: Session = Depends(get_db)):
     parsing = Scraping(get_url.url(), searchParams.date)
     parsing.close_cookies()
 
-    return parsing.get_data()
+    return parsing.get_data(db)
 
 @main_router.get("/flight/search", response_model=List[schemas.Airports])
 def all_airports(db: Session = Depends(get_db)) -> list:

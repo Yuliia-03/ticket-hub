@@ -195,14 +195,14 @@
                     <div>
 
                     <button class="filters-sub-header" id="filters-airports"
-                        (click)="toggleSection(filterAirports)">Airports</button>
+                        (click)="toggleSection(filterAirports)">Depart from</button>
                     <div #filterAirports class="filters-sub-section">
                         <!--                      TODO:Implement    -->
-                        <div *ngFor="let filter of filterState.airports.values; let j = index" class="filters-item">
+                        <div *ngFor="let filter of filterState.airports_from.values; let j = index" class="filters-item">
                             <div style="display: flex; align-items: center;">
-                                <input type="checkbox" class="checkbox-input" id="checkbox-{{j}}"
-                                    (change)="filtersChange($event, filter, 'airports')" checked>
-                                <label for="checkbox-{{j}}" class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input" id="checkbox-{{j}}-departure"
+                                    (change)="filtersChange($event, filter, 'airports_from')" checked>
+                                <label for="checkbox-{{j}}-departure" class="checkbox-label">
                                     <span class="checkbox">
                                     </span>
                                 </label>
@@ -215,6 +215,54 @@
                         </div>
                     </div>
                     </div>
+
+                    <div>
+
+                    <button class="filters-sub-header" id="filters-airports"
+                        (click)="toggleSection(filterAirports_to)">Arrive to</button>
+                    <div #filterAirports_to class="filters-sub-section">
+                        <!--                      TODO:Implement    -->
+                        <div *ngFor="let filter of filterState.airports_to.values; let j = index" class="filters-item">
+                            <div style="display: flex; align-items: center;">
+                                <input type="checkbox" class="checkbox-input" id="checkbox-{{j}}-to"
+                                    (change)="filtersChange($event, filter, 'airports_to')" checked>
+                                <label for="checkbox-{{j}}-to" class="checkbox-label">
+                                    <span class="checkbox">
+                                    </span>
+                                </label>
+                                <span class="filter-value">
+                                    {{filter.title}}
+                                </span>
+                            </div>
+                            <div class="filter-value-info">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                    <button class="filters-sub-header" id="filters-airports"
+                        (click)="toggleSection(filterCompanies)">Airlines</button>
+                    <div #filterCompanies class="filters-sub-section">
+                        <!--                      TODO:Implement    -->
+                        <div *ngFor="let filter of filterState.companies.values; let j = index" class="filters-item">
+                            <div style="display: flex; align-items: center;">
+                                <input type="checkbox" class="checkbox-input" id="checkbox-{{j}}-companies"
+                                    (change)="filtersChange($event, filter, 'companies')" checked>
+                                <label for="checkbox-{{j}}-companies" class="checkbox-label">
+                                    <span class="checkbox">
+                                    </span>
+                                </label>
+                                <span class="filter-value">
+                                    {{filter.title}}
+                                </span>
+                            </div>
+                            <div class="filter-value-info">
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    </div>
+
                 </div>
             </div>
             <div *ngIf="filteredResults && filteredResults.length>0" id="flight-results">

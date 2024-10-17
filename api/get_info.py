@@ -1,28 +1,41 @@
 from selenium import webdriver
+#from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service 
+#from selenium.webdriver.chrome.options import Options
 from time import sleep
-import re
+#import re
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
+#from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-import requests
+#import requests
 from datetime import date, datetime, timedelta
 
 
-class Scraping():
+from api import models
+from sqlalchemy.orm import Session
+
+class Scraping:
 
 
     def __init__(self, url: str, date: date) -> None:
         self.data = []
         self.url = url
         self.date = date
-        self.driver = webdriver.Chrome()
+
+        service = Service(executable_path="C:\\Users\\acer\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe")  # Windows path example
+        self.driver = webdriver.Chrome(service=service)
+        #
+        #options = webdriver.ChromeOptions()
+        #options.add_experimental_option('excludeSwitches', ['enable-logging'])
+
+        #self.driver = webdriver.Chrome(ChromeDriverManager().install())
         sleep(0.5)
         self.driver.get(url)
 
     def close_cookies(self):
 
-        xp_popup_close = '//button[@class="Iqt3 Iqt3-mod-stretch Iqt3-mod-bold Button-No-Standard-Style Iqt3-mod-variant-outline Iqt3-mod-theme-base Iqt3-mod-shape-rounded-small Iqt3-mod-shape-mod-default Iqt3-mod-spacing-default Iqt3-mod-size-small"]'
+        xp_popup_close = '/html/body/div[6]/div/div[2]/div/div/div[3]/div/div[1]/button[1]'
         button = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, xp_popup_close)))
         button.click()
         print('Cookies closed')
@@ -31,12 +44,14 @@ class Scraping():
         
     def get_date_time(self):
 
-        time = [self.pageSource[i].find_element(By.CLASS_NAME, 'VY2U').text.split('\n')[0] for i in range(len(self.pageSource))]
+        time = [
+            self.pageSource[i].find_element(By.CLASS_NAME, 'vmXl').text
+            for i in range(len(self.pageSource))]
 
+        #print(time)
         for i in range(len(self.pageSource)):
             time_from = time[i].split('–')[0].split(':')
             self.data[i]['date_time_from'] = datetime(int(self.date.year), int(self.date.month), int(self.date.day), int(time_from[0]), int(time_from[1]))
-
 
         for i in range(len(self.pageSource)):
             time_in = time[i].split('–')[1].split(':')
@@ -47,22 +62,15 @@ class Scraping():
                 new_date = date(int(self.date.year), int(self.date.month), int(self.date.day)) + timedelta(int(time_in[1].split('+')[1]))
                 self.data[i]['date_time_in'] = datetime(year= new_date.year, month=new_date.month, day=new_date.day, hour=int(time_in[0]), minute=int(time_in[1][:-2]))
 
-
     def get_price(self):
 
         for i in range(len(self.pageSource)):
-            if (len(self.pageSource[i].find_elements(By.XPATH, '//div[@class="f8F1-small-emph"]'))>0):
-                price_for_person = self.pageSource[i].find_element(By.CLASS_NAME, 'f8F1-price-text').text
-                total_price = self.pageSource[i].find_element(By.CSS_SELECTOR, 'div > div.f8F1-above > div.f8F1-small-emph').text
-                print(price_for_person, total_price)
-                self.data[i]['total_price'] = total_price
-                self.data[i]['price_for_person'] = price_for_person
-            else:
-                self.data[i]['total_price'] = self.pageSource[i].find_element(By.CLASS_NAME, 'f8F1-price-text').text
+            self.data[i]['total_price'] = self.pageSource[i].find_element(By.CLASS_NAME, 'f8F1-price-text').text
+            print(self.data[i]['total_price'])
 
     def get_from_to(self):
-        departure = [self.pageSource[i].find_element(By.CLASS_NAME, 'VY2U').text.split('\n')[1] for i in range(len(self.pageSource))]
-        arrival = [self.pageSource[i].find_element(By.CLASS_NAME, 'VY2U').text.split('\n')[3] for i in range(len(self.pageSource))]
+        departure = [self.pageSource[i].find_element(By.CLASS_NAME, 'EFvI').text.split('\n')[0] for i in range(len(self.pageSource))]
+        arrival = [self.pageSource[i].find_element(By.CLASS_NAME, 'EFvI').text.split('\n')[2] for i in range(len(self.pageSource))]
 
         for i in range(len(departure)):
             self.data[i]['airport_departure_IATA'] = departure[i][0:3]
@@ -70,37 +78,42 @@ class Scraping():
 
             self.data[i]['airport_departure_name'] = departure[i][3:]
             self.data[i]['airport_arrival_name'] = arrival[i][3:]
+            #print(self.data[i]['airport_departure_IATA'] + " " + self.data[i]['airport_arrival_IATA'])
+            #print(self.data[i]['airport_departure_name'] + " " + self.data[i]['airport_arrival_name'])
 
-    def get_route(self):
+    def get_route(self, db: Session):
 
         routes = [self.pageSource[i].find_element(By.CLASS_NAME, 'JWEO').text for i in range(len(self.pageSource))]
 
 
         for i in range(len(self.pageSource)):
-            
-            if routes[i] == 'direct' or routes[i].split(' ')[0] == 0:
+
+            if routes[i] == 'direct':
                 self.data[i]['route'] = {'stops' : "direct", }
             
             else:
 
                 stops = routes[i].split('\n')
-                if int(stops[0][0]) > 1:
-                    stops_str = str(stops[0][0]) + " stops"
-                else:
-                    stops_str = str(stops[0][0]) + " stop"
+                stops_str = str(stops[0][0]) + " stop(s)"
+
                 self.data[i]['route'] = {'stops' : stops_str, }
-                
                 time = self.pageSource[i].find_elements(By.CSS_SELECTOR, 'div.c_cgF.c_cgF-mod-variant-full-airport > span')
                 route = []
 
                 for t in time:
-                    airport = t.text
-                    
+                    airport = t.text.split(",")[0]
+
                     info = t.find_element(By.TAG_NAME, 'span').get_attribute('title')
                     time = info.split('stopover')[0]
-                    change = re.search(r'<b>(.*?)</b>', info).group(1)
-                    route.append({'airport_IATA': airport, 'airport_name': change, 'waiting_time' : time})
-                
+                    change = ''
+                    if (len(airport) == 3):
+                        change = models.get_city_by_iata(db, airport)
+                    else:
+                        change1 = models.get_city_by_iata(db, airport.split('-')[0])
+                        change2 = models.get_city_by_iata(db, airport.split('-')[1])
+                        change = str(change1) + " " + str(change2)
+                    route.append({'airport_IATA': airport, 'airport_name': change, 'waiting_time': time})
+
                 self.data[i]['route']['transfers'] = route
 
     def company(self):
@@ -165,19 +178,27 @@ class Scraping():
         return list_of_data
 
 
-    def get_data(self):
+    def get_data(self, db: Session):
 
-        self.pageSource = self.driver.find_elements(By.CLASS_NAME, "nrc6") 
+        self.pageSource = self.driver.find_elements(By.CLASS_NAME, "nrc6-inner")
         self.data = [{} for _ in range(len(self.pageSource))]
+
+
+        #time = [self.pageSource[i].text for i in range(len(self.pageSource))]
+        #print(time)
+        #print(len(self.pageSource))
 
         self.get_date_time()
         self.get_price()
         self.get_from_to()
-        self.get_route()
+        self.get_route(db)
         self.get_duration()
         self.cabin_class()
         self.company()
         self.get_url()
+
+        for i in range(len(self.data)):
+            print(self.data[i])
 
         # return more booking options
         # i - number of flight from the list

@@ -7,9 +7,12 @@ class GetUrl():
 
     def __init__(self, serchParam: schemas.SearchParams, db: Session) -> None:
         #self.departure = serchParam.departure
+        print("Stage1")
         self.departure = models.get_iata_by_city(db, serchParam.departure)
+        print("Stage2")
         #self.arrival = serchParam.arrival
         self.arrival = models.get_iata_by_city(db, serchParam.arrival)
+        print("Stage3")
 
         #self.day = serchParam.date.day
         #self.month = serchParam.date.month
@@ -38,6 +41,7 @@ class GetUrl():
 
 
         self.url = f'https://www.kayak.co.uk/flights/{self.departure}-{self.arrival}/{self.date}/{self.cabin_class}/{self.adults}adults/{self.students}students/{self.children()}?sort=bestflight_a'
+        print(self.url)
         return self.url
 
 

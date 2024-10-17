@@ -33,7 +33,9 @@ export class HomeComponent implements OnInit {
     departureCities: any = null;
   arrivalCities: any = null;
   
-  directions = new Set<string>();
+  airport_from = new Set<string>();
+  airport_to = new Set<string>();
+  companies = new Set<string>();
 
     filterIsEmpty: boolean = true;
     filterState: any = {
@@ -58,8 +60,16 @@ export class HomeComponent implements OnInit {
         } 
         ]
       },
-      airports: {
-        title: "Airports",
+      airports_from: {
+        title: "Departure airport",
+        values: []
+      },
+      airports_to: {
+        title: "Arrival airport",
+        values: []
+      },
+      companies: {
+        title: "Companies",
         values: []
       }
       
@@ -544,7 +554,7 @@ export class HomeComponent implements OnInit {
                 this.searchResults = resp;
               this.filteredResults = resp;
               for (let searchResult of this.searchResults) {
-                this.getAllAirports(searchResult);
+                this.findAllFilters(searchResult);
                 console.log(this.filterState)
               }
                 //this.filterList();
@@ -579,12 +589,22 @@ export class HomeComponent implements OnInit {
 
         for (let searchResult of this.searchResults) {
 
-          if (!this.checkIfItemSatisfiesAirportsFilter(searchResult)) {
+          if (!this.checkIfItemSatisfiesAirportsFromFilter(searchResult)) {
+            this.filteredResults = this.filteredResults.filter((element: any) => {
+              return element !== searchResult;
+            });;
+          }
+          if (!this.checkIfItemSatisfiesAirportsToFilter(searchResult)) {
             this.filteredResults = this.filteredResults.filter((element: any) => {
               return element !== searchResult;
             });;
           }
           if (!this.checkIfItemSatisfiesStopsFilter(searchResult)) {
+            this.filteredResults = this.filteredResults.filter((element: any) => {
+              return element !== searchResult;
+            });;
+          }
+          if (!this.checkIfItemSatisfiesCompaniesFilter(searchResult)) {
             this.filteredResults = this.filteredResults.filter((element: any) => {
               return element !== searchResult;
             });;
@@ -619,11 +639,11 @@ export class HomeComponent implements OnInit {
       return true
   }
 
-  getAllAirports(item: any): void {
-    if (!this.directions.has(item.airport_departure_name)) {
-      this.directions.add(item.airport_departure_name)
-      this.filterState.airports.values.push({
-        key: this.directions.size,
+  findAllFilters(item: any): void {
+    if (!this.airport_from.has(item.airport_departure_name)) {
+      this.airport_from.add(item.airport_departure_name)
+      this.filterState.airports_from.values.push({
+        key: this.airport_from.size,
         value: item.airport_departure_name,
         title: item.airport_departure_name,
         selected: true
@@ -631,12 +651,54 @@ export class HomeComponent implements OnInit {
       })
     }
 
+    if (!this.airport_to.has(item.airport_arrival_name)) {
+      this.airport_to.add(item.airport_arrival_name)
+      this.filterState.airports_to.values.push({
+        key: this.airport_to.size,
+        value: item.airport_arrival_name,
+        title: item.airport_arrival_name,
+        selected: true
+
+      })
+    }
+
+    if (!this.companies.has(item.company)) {
+      this.companies.add(item.company)
+      this.filterState.companies.values.push({
+        key: this.companies.size,
+        value: item.company,
+        title: item.company,
+        selected: true
+
+      })
+    }
+
   }
 
-  checkIfItemSatisfiesAirportsFilter(item: any): boolean {
+  checkIfItemSatisfiesAirportsFromFilter(item: any): boolean {
 
-    for (let airport of this.filterState.airports.values) {
+    for (let airport of this.filterState.airports_from.values) {
       if (item.airport_departure_name == airport.title && !airport.selected) {
+        return false;
+      }
+    }
+    return true
+  }
+
+  checkIfItemSatisfiesAirportsToFilter(item: any): boolean {
+
+    for (let airport of this.filterState.airports_to.values) {
+      if (item.airport_arrival_name == airport.title && !airport.selected) {
+        return false;
+      }
+    }
+    return true
+  }
+
+  checkIfItemSatisfiesCompaniesFilter(item: any): boolean {
+
+    for (let company of this.filterState.companies.values) {
+      if (item.company == company.title && !company.selected) {
         return false;
       }
     }

@@ -19,10 +19,16 @@ def get_iata_by_city(db: Session, city: str):
         return None
     return citi_iata[0]
 
+def get_city_by_iata(db: Session, iata: str):
+    city = db.query(Airports.city_airport).filter(Airports.iata_code == iata).first()
+    if city == None:
+        return None
+    return city[0]
+
 def get_all_airports(db: Session) -> list:
     airports = db.query(Airports.city_airport).all()
     if airports == None:
-        return None
+        return ""
     return airports
 
 #def get_all_airports_data(db: Session) -> list:
